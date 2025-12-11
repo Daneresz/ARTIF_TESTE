@@ -1,0 +1,71 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>👁️ VISUALIZAR SOLICITAÇÃO</h1>
+            <p class="subtitle">> Request Details Interface</p>
+        </div>
+
+        <div style="max-width: 600px; margin: 0 auto;">
+            <a href="/admin/solicitacoes/lst" class="btn" style="margin-bottom: 20px;">← Voltar às Solicitações</a>
+            
+            <div style="border: 2px solid #00ff00; padding: 20px; background: rgba(0,255,0,0.05); margin-bottom: 20px;">
+                <div style="margin-bottom: 15px;">
+                    <strong style="color: #00ff00;">📋 Tipo:</strong>
+                    <span style="background-color: rgba(0,255,0,0.2); color: #00ff00; padding: 4px 8px; text-transform: capitalize; border: 1px solid #00ff00; margin-left: 10px; font-weight: bold;">
+                        <%= solicitacao.tipo === 'arte' ? '🎨' : '👥' %> <%= solicitacao.tipo %>
+                    </span>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <strong style="color: #00ff00;">📊 Status:</strong>
+                    <span style="background-color: <%= solicitacao.status === 'pendente' ? 'rgba(255,165,0,0.2)' : solicitacao.status === 'aceita' ? 'rgba(0,255,0,0.2)' : 'rgba(255,0,0,0.2)' %>; color: <%= solicitacao.status === 'pendente' ? '#ffa500' : solicitacao.status === 'aceita' ? '#00ff00' : '#ff0000' %>; padding: 4px 8px; text-transform: capitalize; border: 1px solid <%= solicitacao.status === 'pendente' ? '#ffa500' : solicitacao.status === 'aceita' ? '#00ff00' : '#ff0000' %>; margin-left: 10px; font-weight: bold;">
+                        <%= solicitacao.status === 'pendente' ? '⏳' : solicitacao.status === 'aceita' ? '✓' : '✗' %> <%= solicitacao.status %>
+                    </span>
+                </div>
+                
+                <div style="margin-bottom: 15px; color: #00ff00;">
+                    <strong>📝 Nome:</strong> <%= solicitacao.nome %>
+                </div>
+                
+                <div style="margin-bottom: 15px; color: #00ff00;">
+                    <strong>📄 Descrição:</strong>
+                    <p><%= solicitacao.descricao %></p>
+                </div>
+                
+                <% if (solicitacao.arte) { %>
+                    <div style="margin-bottom: 15px; color: #00ff00;">
+                        <strong>🎨 Arte:</strong> <%= solicitacao.arte %>
+                    </div>
+                <% } %>
+                
+                <% if (solicitacao.imagem) { %>
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: #00ff00;">🖼️ Imagem:</strong>
+                        <img src="<%= solicitacao.imagem %>" alt="imagem" style="max-width: 300px; height: auto; border: 2px solid #00ff00; margin-top: 10px;">
+                    </div>
+                <% } %>
+                
+                <% if (solicitacao.status === 'rejeitada' && solicitacao.motivoRejeicao) { %>
+                    <div style="margin-bottom: 15px; background-color: rgba(255,0,0,0.2); padding: 10px; border: 2px solid #ff0000; color: #ff0000; font-weight: bold;">
+                        <strong>✗ Motivo da Rejeição:</strong>
+                        <p><%= solicitacao.motivoRejeicao %></p>
+                    </div>
+                <% } %>
+                
+                <div style="margin-top: 20px; color: #00ff00;">
+                    <strong>⏰ Criada em:</strong> <%= new Date(solicitacao.createdAt).toLocaleDateString('pt-BR') %>
+                </div>
+            </div>
+            
+            <% if (solicitacao.status === 'pendente') { %>
+                <div style="display: flex; gap: 10px;">
+                    <a href="/admin/solicitacoes/aceitar/<%= solicitacao._id %>" class="btn" style="flex: 1; text-align: center; background-color: #00ff00; color: #000;">✓ Aceitar</a>
+                    <a href="/admin/solicitacoes/rejeitar/<%= solicitacao._id %>" class="btn" style="flex: 1; text-align: center; background-color: #ff0000; color: #000;">✗ Rejeitar</a>
+                </div>
+            <% } %>
+        </div>
+
+<%- include('../../admin-matrix-footer.ejs') %>
+    <% } %>
+    
+    <%- include('../../rodape.ejs') %>

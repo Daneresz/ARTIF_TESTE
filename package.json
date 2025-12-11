@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "mongoose": "8.3.4",
+    "multer": "^2.0.2"
+  },
+  "name": "d2-main",
+  "description": "",
+  "version": "1.0.0",
+  "main": "api/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

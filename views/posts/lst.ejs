@@ -1,0 +1,45 @@
+<%- include('../cabecalho.ejs') %>
+    <div style="margin-bottom: 16px;">
+        <a href="/posts" style="text-decoration: none; color: #007bff; font-weight: bold;">📱 Ver Posts</a>
+    </div>
+    <h1>Gerenciar Posts</h1>
+    <form method="get" action="/posts/lst" style="margin-bottom: 16px;">
+        <input type="text" name="busca" placeholder="Pesquisar por Título ou Artista"
+            value="<%= typeof busca !== 'undefined' ? busca : '' %>">
+        <button type="submit">Buscar</button>
+    </form>
+    <a href="/posts/add">+ Novo Post</a>
+    <table>
+        <tr>
+            <td>Título</td>
+            <td>Artista</td>
+            <td>Artes</td>
+            <td>Ações</td>
+        </tr>
+        <% if (Posts && Posts.length > 0) { %>
+            <% Posts.forEach(post => { %>
+                <tr>
+                    <td>
+                        <strong><%= post.titulo %></strong>
+                    </td>
+                    <td>
+                        <%= post.artista %>
+                    </td>
+                    <td>
+                        <% if (post.artes && post.artes.length > 0) { %>
+                            <%= post.artes.join(', ') %>
+                        <% } %>
+                    </td>
+                    <td>
+                        <a href="/posts/edt/<%= post._id %>" class="btn edit"><i class="fa fa-pen"></i> Editar</a>
+                        <a href="/posts/del/<%= post._id %>" class="btn delete"><i class="fa fa-trash"></i> Excluir</a>
+                    </td>
+                </tr>
+            <% }) %>
+        <% } else { %>
+            <tr>
+                <td colspan="4">nada foi encontrado, verifique se digitou corretamente</td>
+            </tr>
+        <% } %>
+    </table>
+    <%- include('../rodape.ejs') %>

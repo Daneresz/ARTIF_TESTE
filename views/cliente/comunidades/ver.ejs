@@ -1,0 +1,577 @@
+<%- include('../../cabecalho.ejs') %>
+<style>
+    .comunidade-wrapper {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        min-height: auto;
+    }
+
+    .comunidade-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        gap: 20px;
+    }
+
+    .comunidade-header h1 {
+        margin: 0;
+        flex: 1;
+        font-size: 32px;
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-small {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 999px;
+        background: rgba(229, 57, 53, 0.1);
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: none;
+        color: #E53935;
+        display: inline-block;
+        transition: all 0.2s;
+        white-space: nowrap;
+        font-weight: 600;
+    }
+
+    .btn-small:hover {
+        background: rgba(229, 57, 53, 0.2);
+        color: #F9A825;
+    }
+
+    .btn-primary {
+        background: linear-gradient(90deg, #E53935, #F9A825);
+        color: white;
+        border: none;
+        font-weight: 600;
+        box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-1px) scale(1.01);
+        opacity: 0.9;
+    }
+
+    .posts-feed {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        border: 1px solid rgba(229, 57, 53, 0.25);
+        max-width: 600px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(229, 57, 53, 0.1);
+    }
+
+    .posts-section {
+        border-top: none;
+    }
+
+    .post {
+        padding: 20px;
+        border-bottom: 1px solid rgba(229, 57, 53, 0.15);
+        transition: background-color 0.2s ease;
+    }
+
+    .post:last-child {
+        border-bottom: none;
+    }
+
+    .post:hover {
+        background-color: rgba(249, 168, 37, 0.08);
+    }
+
+    .post-author {
+        margin-bottom: 12px;
+        font-weight: 600;
+        color: #333;
+        font-size: 15px;
+    }
+
+    .admin-badge {
+        display: inline-block;
+        background: linear-gradient(90deg, #E53935, #F9A825);
+        color: white;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        margin-left: 8px;
+        vertical-align: middle;
+    }
+
+    .post-content {
+        font-size: 15px;
+        color: #555;
+        margin-bottom: 12px;
+        line-height: 1.6;
+        word-wrap: break-word;
+    }
+
+    .post-image {
+        margin: 12px 0;
+        border-radius: 4px;
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        display: block;
+        max-height: 400px;
+        object-fit: contain;
+        background: #f5f5f5;
+    }
+
+    .post-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 12px;
+    }
+
+    .post-action-btn {
+        background: none;
+        border: none;
+        color: #E53935;
+        cursor: pointer;
+        font-size: 13px;
+        padding: 4px 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.2s;
+        letter-spacing: 0.3px;
+    }
+
+    .post-action-btn:hover {
+        color: #F9A825;
+        text-decoration: underline;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #999;
+    }
+
+    /* Modal */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+    }
+
+    .modal-overlay.active {
+        display: flex;
+    }
+
+    .modal {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 30px;
+        max-width: 500px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(229, 57, 53, 0.25);
+        backdrop-filter: blur(6px);
+        margin: auto;
+    }
+
+    .modal h2 {
+        margin: 0 0 20px 0;
+        font-size: 24px;
+        background: linear-gradient(90deg, #E53935, #F9A825);
+        -webkit-background-clip: text;
+        color: transparent;
+        font-weight: 600;
+    }
+
+    .modal-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: #E53935;
+        font-size: 14px;
+        letter-spacing: 0.3px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 12px 14px;
+        border: 2px solid rgba(229, 57, 53, 0.4);
+        border-radius: 14px;
+        font-size: 14px;
+        font-family: inherit;
+        box-sizing: border-box;
+        transition: 0.2s;
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #E53935;
+        box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.15), 0 0 8px rgba(249, 168, 37, 0.4);
+    }
+
+    .form-group textarea::placeholder,
+    .form-group input::placeholder {
+        color: #999;
+    }
+
+    .form-file-wrapper {
+        position: relative;
+    }
+
+    .form-file-btn {
+        padding: 12px;
+        border: 2px dashed rgba(229, 57, 53, 0.4);
+        border-radius: 14px;
+        background: rgba(229, 57, 53, 0.05);
+        cursor: pointer;
+        text-align: center;
+        color: #E53935;
+        font-weight: 600;
+        transition: all 0.2s;
+    }
+
+    .form-file-btn:hover {
+        border-color: #F9A825;
+        background: rgba(249, 168, 37, 0.1);
+        color: #F9A825;
+    }
+
+    .form-file-input {
+        display: none;
+    }
+
+    .file-name {
+        font-size: 12px;
+        color: #666;
+        margin-top: 5px;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+    .btn-cancel {
+        padding: 10px 20px;
+        border: 2px solid rgba(229, 57, 53, 0.4);
+        background: white;
+        color: #E53935;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s;
+        font-weight: 600;
+    }
+
+    .btn-cancel:hover {
+        background: rgba(229, 57, 53, 0.1);
+        border-color: #F9A825;
+        color: #F9A825;
+    }
+
+    .btn-submit {
+        padding: 10px 20px;
+        background: linear-gradient(90deg, #E53935, #F9A825);
+        color: white;
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-1px) scale(1.01);
+        opacity: 0.9;
+    }
+
+    .btn-submit:disabled {
+        background: rgba(229, 57, 53, 0.4);
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+    }
+
+    /* Modal de Confirmação */
+    .confirm-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .confirm-modal.active {
+        display: flex;
+    }
+
+    .confirm-content {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 30px;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(229, 57, 53, 0.25);
+        text-align: center;
+    }
+
+    .confirm-content h3 {
+        margin: 0 0 15px 0;
+        font-size: 18px;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .confirm-content p {
+        margin: 0 0 25px 0;
+        color: #555;
+        font-size: 15px;
+    }
+
+    .confirm-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .confirm-btn {
+        padding: 10px 25px;
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+    }
+
+    .confirm-btn.cancel {
+        background: rgba(229, 57, 53, 0.1);
+        color: #E53935;
+        border: 2px solid rgba(229, 57, 53, 0.4);
+    }
+
+    .confirm-btn.cancel:hover {
+        background: rgba(229, 57, 53, 0.2);
+        border-color: #F9A825;
+        color: #F9A825;
+    }
+
+    .confirm-btn.delete {
+        background: linear-gradient(90deg, #E53935, #F9A825);
+        color: white;
+        box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
+    }
+
+    .confirm-btn.delete:hover {
+        transform: translateY(-1px) scale(1.01);
+        opacity: 0.9;
+    }
+    @media (max-width: 768px) {
+        .comunidade-wrapper {
+            padding: 15px;
+        }
+
+        .comunidade-header {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .comunidade-header h1 {
+            font-size: 24px;
+        }
+
+        .posts-feed {
+            max-width: 100%;
+        }
+
+        .post-image {
+            max-height: 300px;
+        }
+
+        .modal {
+            width: 95%;
+            padding: 20px;
+        }
+
+        .modal h2 {
+            font-size: 20px;
+        }
+    }
+
+</style>
+
+<div class="comunidade-wrapper">
+    <div class="comunidade-header">
+        <h1><%= comunidade.nome %></h1>
+        <div class="header-actions">
+            <a href="/cliente/comunidades/lst" class="btn-small">← Voltar</a>
+            <button class="btn-small btn-primary" onclick="openPostModal()">+ Postar</button>
+        </div>
+    </div>
+
+    <div class="posts-feed">
+        <div class="posts-section">
+            <% if (posts && posts.length > 0) { %>
+                <% posts.forEach(post => { %>
+                    <div class="post">
+                        <div class="post-author">
+                            <% if (post.artistaDeletado) { %>
+                                👤 Usuário Deletado
+                            <% } else if (post.artista === 'ADM') { %>
+                                📢 ADM<span class="admin-badge">Administrador</span>
+                            <% } else { %>
+                                <%= post.artista %>
+                            <% } %>
+                        </div>
+                        
+                        <div class="post-content">
+                            <%= post.descricao %>
+                        </div>
+                        
+                        <% if (post.imagem) { %>
+                            <img src="<%= post.imagem %>" class="post-image" alt="Imagem do post">
+                        <% } %>
+                        
+                        <div class="post-actions">
+                            <a href="#" class="post-action-btn" onclick="event.preventDefault(); openGlobalConfirm('/cliente/comunidades/ver/<%= comunidadeId %>/post/<%= post._id %>/del', 'Tem certeza que deseja deletar este post?')">Deletar</a>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="empty-state">
+                    <p>Nenhum post ainda nesta comunidade.</p>
+                    <p>Clique em "+ Postar" para começar!</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Postar -->
+<div class="modal-overlay" id="postModal">
+    <div class="modal">
+        <h2>Novo Post</h2>
+        <form method="post" action="/cliente/comunidades/ver/<%= comunidadeId %>/post" enctype="multipart/form-data" class="modal-form" id="postForm">
+            <input type="hidden" name="artista" id="artistaInput" value="">
+
+            <div class="form-group">
+                <label for="conta">Qual conta você quer usar?</label>
+                <select id="conta" required onchange="atualizarArtista()">
+                    <option value="">Selecione uma conta...</option>
+                    <% if (contas && contas.length > 0) { %>
+                        <% contas.forEach(conta => { %>
+                            <option value="<%= conta.artista %>"><%= conta.artista %></option>
+                        <% }) %>
+                    <% } %>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="mensagem">Mensagem</label>
+                <textarea id="mensagem" name="descricao" placeholder="O que você quer compartilhar?" required></textarea>
+            </div>
+
+            <div class="form-group form-file-wrapper">
+                <label>Imagem (opcional)</label>
+                <input type="file" name="imagem" accept="image/*" class="form-file-input" id="imageInput" onchange="atualizarNomeArquivo()">
+                <div class="form-file-btn" onclick="document.getElementById('imageInput').click()">
+                    📷 Clique para adicionar imagem
+                </div>
+                <div class="file-name" id="fileName"></div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closePostModal()">Cancelar</button>
+                <button type="submit" class="btn-submit">Postar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openPostModal() {
+        document.getElementById('postModal').classList.add('active');
+        document.getElementById('conta').focus();
+    }
+
+    function closePostModal() {
+        document.getElementById('postModal').classList.remove('active');
+        document.getElementById('postForm').reset();
+        document.getElementById('fileName').textContent = '';
+    }
+
+    function atualizarArtista() {
+        const conta = document.getElementById('conta').value;
+        document.getElementById('artistaInput').value = conta;
+    }
+
+    function atualizarNomeArquivo() {
+        const fileInput = document.getElementById('imageInput');
+        const fileName = document.getElementById('fileName');
+        if (fileInput.files && fileInput.files[0]) {
+            fileName.textContent = '✓ ' + fileInput.files[0].name;
+        } else {
+            fileName.textContent = '';
+        }
+    }
+
+    // Fechar modal ao clicar fora
+    document.getElementById('postModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closePostModal();
+        }
+    });
+
+    // Fechar modal com tecla Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closePostModal();
+        }
+    });
+</script>
+
+<%- include('../../rodape.ejs') %>

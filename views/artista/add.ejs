@@ -1,0 +1,35 @@
+<%- include('../cabecalho.ejs') %>
+    <h1>Adicionar Perfil</h1>
+    <form method="post" action="/artista/add" enctype="multipart/form-data">
+        <div>
+            <label>Foto de Perfil:</label>
+            <input type="file" name="perfil" accept="image/*">
+        </div>
+        <div>
+            <label>Nome:</label>
+            <input type="text" name="artista" required>
+        </div>
+        <div>
+            <label>Artes (pode selecionar mais de 1 ou nenhuma):</label>
+            <div class="checkbox-group">
+                <label class="checkbox-item">
+                    <input type="checkbox" name="explorer" value="true">
+                    <span class="checkbox-label">Apenas Explorando</span>
+                </label>
+                <% if (Artes && Artes.length > 0) { %>
+                    <% Artes.forEach(arte => { %>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="artes" value="<%= arte.titulo %>">
+                            <span class="checkbox-label"><%= arte.titulo %></span>
+                        </label>
+                    <% }) %>
+                <% } %>
+            </div>
+        </div>
+        <div>
+            <label>Idade:</label>
+            <input type="number" name="idade" required>
+        </div>
+        <button type="submit">Salvar</button>
+    </form>
+    <%- include('../rodape.ejs') %>

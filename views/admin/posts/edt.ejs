@@ -1,0 +1,70 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>✏️ EDITAR POST</h1>
+            <p class="subtitle">> Update Post Interface</p>
+        </div>
+
+        <div style="max-width: 600px; margin: 0 auto;">
+            <a href="/admin/posts/lst" class="btn" style="margin-bottom: 20px;">← Voltar aos Posts</a>
+            
+            <form method="post" action="/admin/posts/edt/<%= Post._id %>" enctype="multipart/form-data" class="admin-form">
+                <div class="form-group">
+                    <label>📝 Título do Post:</label>
+                    <input type="text" name="titulo" value="<%= Post.titulo %>" required>
+                </div>
+                <div class="form-group">
+                    <label>🎭 Artista:</label>
+                    <select name="artista" required style="background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 10px; font-family: 'Courier New'; font-weight: bold;">
+                        <option value="<%= Post.artista %>"><%= Post.artista %></option>
+                        <% if (Artistas && Artistas.length > 0) { %>
+                            <% Artistas.forEach(artista => { %>
+                                <% if (artista.artista !== Post.artista) { %>
+                                    <option value="<%= artista.artista %>"><%= artista.artista %></option>
+                                <% } %>
+                            <% }) %>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>🎨 Artes (pode selecionar mais de 1 ou nenhuma):</label>
+                    <div style="background: rgba(0,255,0,0.05); border: 1px solid #00ff00; padding: 15px; color: #00ff00; font-family: 'Courier New';">
+                        <% const isExploring = !Post.artes || Post.artes.length === 0 %>
+                        <label style="display: block; margin-bottom: 10px; cursor: pointer;">
+                            <input type="checkbox" name="explorer" value="true" style="margin-right: 8px;" <% if (isExploring) { %>checked<% } %>>
+                            Apenas Explorando
+                        </label>
+                        <% if (Artes && Artes.length > 0) { %>
+                            <% Artes.forEach(arte => { %>
+                                <% const isSelected = Post.artes && Post.artes.includes(arte.titulo) %>
+                                <label style="display: block; margin-bottom: 8px; cursor: pointer;">
+                                    <input type="checkbox" name="artes" value="<%= arte.titulo %>" style="margin-right: 8px;" <% if (isSelected) { %>checked<% } %>>
+                                    <%= arte.titulo %>
+                                </label>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>📄 Descrição (opcional):</label>
+                    <textarea name="descricao" rows="4" style="background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 10px; font-family: 'Courier New'; font-weight: bold; resize: none;"><%= Post.descricao %></textarea>
+                </div>
+                <div class="form-group">
+                    <label>🖼️ Imagem</label>
+                    <% if (Post.imagem) { %>
+                        <div style="margin-bottom: 10px;"><img src="<%= Post.imagem %>" style="width:120px;height:auto; border: 2px solid #00ff00;"></div>
+                    <% } %>
+                    <input type="file" name="imagem" accept="image/*" style="color: #00ff00;">
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <a href="/admin/posts/lst" class="btn" style="flex: 1; text-align: center;">Cancelar</a>
+                    <button type="submit" class="btn" style="flex: 1;">✓ Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+
+<%- include('../../admin-matrix-footer.ejs') %>
+        <button type="submit">Salvar</button>
+    </form>
+    <%- include('../../rodape.ejs') %>

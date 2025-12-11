@@ -1,0 +1,58 @@
+<%- include('../cabecalho.ejs') %>
+    <div style="margin-bottom: 16px;">
+        <a href="/artista/lst" style="text-decoration: none; color: #007bff; font-weight: bold;">🎤 Gerenciar Artistas</a>
+    </div>
+    <h1>🎨 Artes</h1>
+    <form method="get" action="/artes/public" style="margin-bottom: 16px;">
+        <input type="text" name="busca" placeholder="Pesquisar por Título"
+            value="<%= typeof busca !== 'undefined' ? busca : '' %>">
+        <button type="submit">Buscar</button>
+    </form>
+    <div class="music-list">
+        <% if (Artes && Artes.length > 0) { %>
+            <% Artes.forEach(arte => { %>
+                <div class="music-item">
+                    <div class="music-summary">
+                        <h3>
+                            <%= arte.titulo %>
+                        </h3>
+                        <button type="button" class="expand-btn">Expanda</button>
+                    </div>
+                    <div class="music-details" style="display:none; margin-top:8px;">
+                        <div style="display:flex; gap:16px; align-items:flex-start;">
+                            <div>
+                                <% if (arte.imagem) { %>
+                                    <img src="<%= arte.imagem %>" alt="imagem" style="width:120px;height:auto">
+                                <% } %>
+                            </div>
+                            <div>
+                                <% if (arte.descricao) { %>
+                                    <p><strong>Descrição:</strong> <br>
+                                    <pre style="white-space:pre-wrap"><%= arte.descricao %></pre>
+                                    </p>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>Nenhuma arte encontrada.</p>
+        <% } %>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.music-item').forEach(function (item) {
+                var btn = item.querySelector('.expand-btn');
+                var details = item.querySelector('.music-details');
+                if (!btn || !details) return;
+                btn.addEventListener('click', function () {
+                    var isHidden = details.style.display === 'none' || details.style.display === '';
+                    details.style.display = isHidden ? 'block' : 'none';
+                    btn.textContent = isHidden ? 'Fechar' : 'Expanda';
+                });
+            });
+        });
+    </script>
+    <%- include('../rodape.ejs') %>

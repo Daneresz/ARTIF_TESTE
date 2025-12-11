@@ -1,0 +1,62 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>🎭 GERENCIAR ARTISTAS</h1>
+            <p class="subtitle">> Artist Management System</p>
+        </div>
+
+        <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+            <a href="/admin" class="btn">← Voltar ao Painel</a>
+            <a href="/admin/artista/add" class="btn" style="flex: 1;">+ Novo Artista</a>
+        </div>
+
+        <form method="get" action="/admin/artista/lst" style="margin-bottom: 25px; display: flex; gap: 10px;">
+            <input type="text" name="busca" placeholder="Pesquisar Artista..." value="<%= typeof busca !== 'undefined' ? busca : '' %>" style="flex: 1;">
+            <button type="submit" class="btn">🔍 Buscar</button>
+        </form>
+
+        <table>
+            <tr>
+                <td>Perfil</td>
+                <td>Artes</td>
+                <td>Artista</td>
+                <td>Idade</td>
+                <td>Ações</td>
+            </tr>
+            <% if (Musicas.length===0) { %>
+                <tr>
+                    <td colspan="5" style="text-align: center;">[ Nenhum artista encontrado ]</td>
+                </tr>
+            <% } else { %>
+                <% for (const m of Musicas) { %>
+                    <tr>
+                        <td>
+                            <% if (m.perfil) { %>
+                                <img src="<%= m.perfil %>" alt="perfil" style="width:60px; height:auto; border: 1px solid #00ff00;" onerror="this.src='/img/user-placeholder.svg'">
+                            <% } %>
+                        </td>
+                        <td>
+                            <% if (m.artes && m.artes.length > 0) { %>
+                                <%= m.artes.join(', ') %>
+                            <% } else if (m.arte) { %>
+                                <%= m.arte %>
+                            <% } else { %>
+                                <span style="color: rgba(0, 255, 0, 0.5);">-</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <%= m.artista %>
+                        </td>
+                        <td>
+                            <%= m.idade %>
+                        </td>
+                        <td style="display: flex; gap: 10px;">
+                            <a href="/admin/artista/edt/<%= m._id %>" class="btn" style="flex: 1; text-align: center;">✏️ Editar</a>
+                            <a href="#" class="btn" style="flex: 1; text-align: center; border-color: #ff0000; color: #ff0000;" onclick="event.preventDefault(); openGlobalConfirm('/admin/artista/del/<%= m._id %>', 'Tem certeza que deseja deletar este artista?')">🗑️ Deletar</a>
+                        </td>
+                    </tr>
+                <% } %>
+            <% } %>
+        </table>
+
+<%- include('../../admin-matrix-footer.ejs') %>

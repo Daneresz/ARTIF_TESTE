@@ -1,0 +1,29 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>✗ REJEITAR SOLICITAÇÃO</h1>
+            <p class="subtitle">> Rejection Interface</p>
+        </div>
+
+        <div style="max-width: 600px; margin: 0 auto;">
+            <a href="/admin/solicitacoes/lst" class="btn" style="margin-bottom: 20px;">← Voltar às Solicitações</a>
+            
+            <div style="border: 2px solid #ff0000; padding: 20px; background: rgba(255,0,0,0.1); margin-bottom: 20px;">
+                <p style="color: #ff0000; font-weight: bold;">📋 Solicitação: <span style="color: #00ff00;"><%= solicitacao.nome %></span></p>
+                <p style="color: #ff0000; font-weight: bold;">📊 Tipo: <span style="color: #00ff00; text-transform: capitalize;"><%= solicitacao.tipo === 'arte' ? '🎨 Arte' : '👥 Comunidade' %></span></p>
+            </div>
+            
+            <form method="post" class="admin-form">
+                <div class="form-group">
+                    <label>✗ Motivo da Rejeição (opcional):</label>
+                    <textarea name="motivo" placeholder="Explicar por que a solicitação foi rejeitada..." style="background: #000; color: #ff0000; border: 2px solid #ff0000; padding: 10px; font-family: 'Courier New'; font-weight: bold; resize: none; height: 120px;"></textarea>
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <a href="/admin/solicitacoes/lst" class="btn" style="flex: 1; text-align: center;">Cancelar</a>
+                    <button type="submit" class="btn" style="flex: 1; background-color: #ff0000; color: #000;">✗ Confirmar Rejeição</button>
+                </div>
+            </form>
+        </div>
+
+<%- include('../../admin-matrix-footer.ejs') %>

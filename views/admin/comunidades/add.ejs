@@ -1,0 +1,45 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>👥 CRIAR COMUNIDADE</h1>
+            <p class="subtitle">> New Community Interface</p>
+        </div>
+
+        <div style="max-width: 600px; margin: 0 auto;">
+            <a href="/admin/comunidades/lst" class="btn" style="margin-bottom: 20px;">← Voltar ao Painel</a>
+            
+            <% if (erro) { %>
+                <div style="color: #ff0000; margin-bottom: 16px; padding: 10px; background-color: rgba(255,0,0,0.2); border: 2px solid #ff0000; font-family: 'Courier New'; font-weight: bold;">
+                    ✗ <%= erro %>
+                </div>
+            <% } %>
+            
+            <form method="post" enctype="multipart/form-data" class="admin-form">
+                <div class="form-group">
+                    <label>👥 Nome da Comunidade:</label>
+                    <input type="text" name="nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>📝 Descrição:</label>
+                    <textarea name="descricao" required style="background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 10px; font-family: 'Courier New'; font-weight: bold; resize: none; height: 100px;"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>🎨 Arte:</label>
+                    <select name="arte" required style="background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 10px; font-family: 'Courier New'; font-weight: bold;">
+                        <option value="">Selecione uma arte</option>
+                        <% Artes.forEach(arte => { %>
+                            <option value="<%= arte.titulo %>"><%= arte.titulo %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <a href="/admin/comunidades/lst" class="btn" style="flex: 1; text-align: center;">Cancelar</a>
+                    <button type="submit" class="btn" style="flex: 1;">✓ Adicionar</button>
+                </div>
+            </form>
+        </div>
+
+<%- include('../../admin-matrix-footer.ejs') %>

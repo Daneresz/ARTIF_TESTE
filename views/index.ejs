@@ -1,0 +1,25 @@
+<%- include('cabecalho.ejs') %>
+    <div style="text-align: center; margin-top: 40px;">
+        <h2>Sistema para confraternização de artes e artistas</h2>
+        
+        <div style="margin-top: 50px;">
+            <p style="font-size: 1.2rem; color: #666; margin-bottom: 30px;">
+                Escolha seu tipo de acesso:
+            </p>
+            
+            <div style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;">
+                <a href="/cliente" class="choice-btn cliente-btn">
+                    <i class="fas fa-user"></i>
+                    <h3>Sou Cliente</h3>
+                    <p>Ver e criar conteúdo</p>
+                </a>
+                
+                <a href="/admin" class="choice-btn admin-btn">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Sou Admin</h3>
+                    <p>Gerenciar tudo</p>
+                </a>
+            </div>
+        </div>
+    </div>
+<%- include('rodape.ejs') %>

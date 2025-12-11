@@ -1,0 +1,43 @@
+<%- include('../../cabecalho.ejs') %>
+    <div style="margin-bottom: 20px;">
+        <a href="/admin/comunidades/lst" class="card-link view">← Voltar para Comunidades</a>
+    </div>
+    <h1>Membros - <%= comunidade.nome %></h1>
+    
+    <div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <div style="margin-bottom: 15px;">
+            <strong>Comunidade:</strong> <%= comunidade.nome %>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <strong>Arte:</strong> <%= comunidade.arte %>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <strong>Total de Membros:</strong> <%= comunidade.membros ? comunidade.membros.length : 0 %>
+        </div>
+    </div>
+    
+    <% if (comunidade.membros && comunidade.membros.length > 0) { %>
+        <h2>Lista de Membros</h2>
+        <table>
+            <tr>
+                <td>Artista</td>
+                <td>Data de Entrada</td>
+            </tr>
+            <% comunidade.membros.forEach(membro => { %>
+                <tr>
+                    <td>
+                        <strong><%= membro.artista %></strong>
+                    </td>
+                    <td>
+                        <%= new Date(membro.dataMembro).toLocaleDateString('pt-BR') %>
+                    </td>
+                </tr>
+            <% }) %>
+        </table>
+    <% } else { %>
+        <p style="color: #999; padding: 20px; text-align: center;">Nenhum membro nesta comunidade ainda.</p>
+    <% } %>
+    
+    <%- include('../../rodape.ejs') %>

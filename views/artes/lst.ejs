@@ -1,0 +1,35 @@
+<%- include('../cabecalho.ejs') %>
+    <div style="margin-bottom: 16px;">
+        <a href="/artes/public" style="text-decoration: none; color: #007bff; font-weight: bold;">🎨 Ver Artes</a>
+    </div>
+    <h1>Gerenciar Artes</h1>
+    <form method="get" action="/artes/lst" style="margin-bottom: 16px;">
+        <input type="text" name="busca" placeholder="Pesquisar por Título"
+            value="<%= typeof busca !== 'undefined' ? busca : '' %>">
+        <button type="submit">Buscar</button>
+    </form>
+    <a href="/artes/add">+ Nova Arte</a>
+    <table>
+        <tr>
+            <td>Título</td>
+            <td>Ações</td>
+        </tr>
+        <% if (Artes && Artes.length > 0) { %>
+            <% Artes.forEach(arte => { %>
+                <tr>
+                    <td>
+                        <strong><%= arte.titulo %></strong>
+                    </td>
+                    <td>
+                        <a href="/artes/edt/<%= arte._id %>" class="btn edit"><i class="fa fa-pen"></i> Editar</a>
+                        <a href="/artes/del/<%= arte._id %>" class="btn delete"><i class="fa fa-trash"></i> Excluir</a>
+                    </td>
+                </tr>
+            <% }) %>
+        <% } else { %>
+            <tr>
+                <td colspan="2">nada foi encontrado, verifique se digitou corretamente</td>
+            </tr>
+        <% } %>
+    </table>
+    <%- include('../rodape.ejs') %>

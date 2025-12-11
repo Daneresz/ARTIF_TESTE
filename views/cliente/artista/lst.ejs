@@ -1,0 +1,48 @@
+<%- include('../../cabecalho.ejs') %>
+    <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <a href="/cliente" class="card-link view">← Voltar para Cliente</a>
+        <a href="/cliente/artista/add" class="card-link create">+ Novo(a) Artista</a>
+    </div>
+    <h1>Meus Perfis</h1>
+    <form method="get" action="/cliente/artista/lst" style="margin-bottom: 16px;">
+        <input type="text" name="busca" placeholder="Pesquisar por Artista ou Arte"
+            value="<%= typeof busca !== 'undefined' ? busca : '' %>">
+        <button type="submit">Buscar</button>
+    </form>
+    <table>
+        <tr>
+            <td>Perfil</td>
+            <td>Artes</td>
+            <td>Artista</td>
+            <td>Idade</td>
+        </tr>
+        <% if (Musicas.length===0) { %>
+            <tr>
+                <td colspan="4">nada foi encontrado, verifique se digitou corretamente</td>
+            </tr>
+            <% } else { %>
+                <% for (const m of Musicas) { %>
+                    <tr>
+                        <td>
+                            <% if (m.perfil) { %>
+                                <img src="<%= m.perfil %>" alt="perfil" style="width:80px; height:auto" onerror="this.src='/img/user-placeholder.svg'">
+                                <% } %>
+                        </td>
+                        <td>
+                            <% if (m.artes && m.artes.length > 0) { %>
+                                <%= m.artes.join(', ') %>
+                            <% } else if (m.arte) { %>
+                                <%= m.arte %>
+                            <% } %>
+                        </td>
+                        <td>
+                            <%= m.artista %>
+                        </td>
+                        <td>
+                            <%= m.idade %>
+                        </td>
+                    </tr>
+                    <% } %>
+                        <% } %>
+    </table>
+    <%- include('../../rodape.ejs') %>

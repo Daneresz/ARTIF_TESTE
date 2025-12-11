@@ -1,0 +1,21 @@
+<%- include('../cabecalho.ejs') %>
+    <h1>Editar Arte</h1>
+    <form method="post" action="/artes/edt/<%= Arte._id %>" enctype="multipart/form-data">
+        <div>
+            <label>Título da arte:</label>
+            <input type="text" name="titulo" value="<%= Arte.titulo %>" required>
+        </div>
+        <div>
+            <label>Descrição (opcional):</label>
+            <textarea name="descricao" rows="4"><%= Arte.descricao %></textarea>
+        </div>
+        <div>
+            <label>Imagem (capa)</label>
+            <% if (Arte.imagem) { %>
+                <div><img src="<%= Arte.imagem %>" style="width:120px;height:auto"></div>
+            <% } %>
+            <input type="file" name="imagem" accept="image/*">
+        </div>
+        <button type="submit">Salvar</button>
+    </form>
+    <%- include('../rodape.ejs') %>

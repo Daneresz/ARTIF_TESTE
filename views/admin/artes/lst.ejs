@@ -1,0 +1,42 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>🎨 GERENCIAR ARTES</h1>
+            <p class="subtitle">> Artwork Management System</p>
+        </div>
+
+        <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+            <a href="/admin" class="btn">← Voltar ao Painel</a>
+            <a href="/admin/artes/add" class="btn" style="flex: 1;">+ Nova Arte</a>
+        </div>
+
+        <form method="get" action="/admin/artes/lst" style="margin-bottom: 25px; display: flex; gap: 10px;">
+            <input type="text" name="busca" placeholder="Pesquisar Arte..." value="<%= typeof busca !== 'undefined' ? busca : '' %>" style="flex: 1;">
+            <button type="submit" class="btn">🔍 Buscar</button>
+        </form>
+
+        <table>
+            <tr>
+                <td>Título</td>
+                <td>Ações</td>
+            </tr>
+            <% if (Artes && Artes.length > 0) { %>
+                <% Artes.forEach(arte => { %>
+                    <tr>
+                        <td>
+                            <strong><%= arte.titulo %></strong>
+                        </td>
+                        <td style="display: flex; gap: 10px;">
+                            <a href="/admin/artes/edt/<%= arte._id %>" class="btn" style="flex: 1; text-align: center;">✏️ Editar</a>
+                            <a href="#" class="btn" style="flex: 1; text-align: center; border-color: #ff0000; color: #ff0000;" onclick="event.preventDefault(); openGlobalConfirm('/admin/artes/del/<%= arte._id %>', 'Tem certeza que deseja deletar esta arte?')">🗑️ Deletar</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="2" style="text-align: center;">[ Nenhuma arte encontrada ]</td>
+                </tr>
+            <% } %>
+        </table>
+
+<%- include('../../admin-matrix-footer.ejs') %>

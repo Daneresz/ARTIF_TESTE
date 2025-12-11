@@ -1,0 +1,29 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>🎨 CRIAR ARTE</h1>
+            <p class="subtitle">> New Artwork Registration</p>
+        </div>
+
+        <div style="max-width: 600px; margin: 0 auto;">
+            <a href="/admin" class="btn" style="margin-bottom: 20px;">← Voltar ao Painel</a>
+            
+            <form method="post" action="/admin/artes/add" enctype="multipart/form-data" class="admin-form">
+                <div class="form-group">
+                    <label>📝 Título da Arte:</label>
+                    <input type="text" name="titulo" placeholder="Digite o título..." required>
+                </div>
+                
+                <div class="form-group">
+                    <label>📄 Descrição (opcional):</label>
+                    <textarea name="descricao" rows="4" placeholder="Descreva a obra..."></textarea>
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <a href="/admin" class="btn" style="flex: 1; text-align: center;">Cancelar</a>
+                    <button type="submit" class="btn" style="flex: 1;">✓ Salvar Arte</button>
+                </div>
+            </form>
+        </div>
+
+<%- include('../../admin-matrix-footer.ejs') %>

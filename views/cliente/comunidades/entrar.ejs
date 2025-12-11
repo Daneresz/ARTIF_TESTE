@@ -1,0 +1,52 @@
+<%- include('../../cabecalho.ejs') %>
+    <div style="margin-bottom: 20px;">
+        <a href="/cliente/comunidades/lst" class="card-link view">← Voltar para Comunidades</a>
+    </div>
+    <h1><%= comunidade.nome %></h1>
+    
+    <div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <% if (comunidade.imagem) { %>
+            <div style="margin-bottom: 15px;">
+                <img src="<%= comunidade.imagem %>" alt="imagem" style="max-width: 300px; height: auto; border-radius: 4px;">
+            </div>
+        <% } %>
+        
+        <div style="margin-bottom: 15px;">
+            <strong>Arte:</strong> <%= comunidade.arte %>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <strong>Descrição:</strong>
+            <p><%= comunidade.descricao %></p>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <strong>Membros:</strong> <%= comunidade.membros ? comunidade.membros.length : 0 %>
+        </div>
+    </div>
+    
+    <h2>Selecione um perfil para entrar</h2>
+    
+    <% if (erro) { %>
+        <div style="color: #721c24; margin-bottom: 16px; padding: 12px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px;">
+            <%= erro %>
+        </div>
+    <% } %>
+    
+    <form method="post" style="max-width: 600px;">
+        <label style="display: block; margin-bottom: 15px;">
+            <strong>Escolha seu perfil:</strong>
+            <select name="perfil" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                <option value="">-- Selecione um perfil --</option>
+                <% perfis.forEach(perfil => { %>
+                    <option value="<%= perfil._id %>"><%= perfil.artista %></option>
+                <% }) %>
+            </select>
+        </label>
+        
+        <button type="submit" style="text-decoration: none; background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+            ✓ Entrar na Comunidade
+        </button>
+    </form>
+    
+    <%- include('../../rodape.ejs') %>

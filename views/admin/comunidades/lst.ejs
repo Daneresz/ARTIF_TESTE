@@ -1,0 +1,49 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>👥 GERENCIAR COMUNIDADES</h1>
+            <p class="subtitle">> List Management System</p>
+        </div>
+
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <a href="/admin" class="btn">← Voltar ao Painel</a>
+                <a href="/admin/comunidades/add" class="btn" style="background-color: #00ff00; color: #000;">➕ Nova Comunidade</a>
+            </div>
+            
+            <form method="get" action="/admin/comunidades/lst" style="margin-bottom: 20px; display: flex; gap: 10px;">
+                <input type="text" name="busca" placeholder="Pesquisar por Nome ou Arte" value="<%= typeof busca !== 'undefined' ? busca : '' %>" style="flex: 1; background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 10px; font-family: 'Courier New'; font-weight: bold;">
+                <button type="submit" class="btn">🔍 Buscar</button>
+            </form>
+            
+            <div style="overflow-x: auto;">
+                <table>
+                    <tr>
+                        <td>Nome</td>
+                        <td>Arte</td>
+                        <td>Membros</td>
+                        <td>Ações</td>
+                    </tr>
+                    <% if (Comunidades && Comunidades.length > 0) { %>
+                        <% Comunidades.forEach(comunidade => { %>
+                            <tr>
+                                <td><strong><%= comunidade.nome %></strong></td>
+                                <td><%= comunidade.arte %></td>
+                                <td><%= comunidade.membros ? comunidade.membros.length : 0 %></td>
+                                <td style="display: flex; gap: 5px;">
+                                    <a href="/admin/comunidades/ver/<%= comunidade._id %>" class="btn edit" style="padding: 5px 10px; font-size: 12px;">👁️ Ver</a>
+                                    <a href="/admin/comunidades/edt/<%= comunidade._id %>" class="btn edit" style="padding: 5px 10px; font-size: 12px;">✏️ Editar</a>
+                                    <a href="#" class="btn delete" style="padding: 5px 10px; font-size: 12px;" onclick="event.preventDefault(); openGlobalConfirm('/admin/comunidades/del/<%= comunidade._id %>', 'Tem certeza que deseja deletar esta comunidade?')">🗑️ Deletar</a>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="4" style="text-align: center;">[  Nenhuma comunidade encontrada  ]</td>
+                        </tr>
+                    <% } %>
+                </table>
+            </div>
+        </div>
+
+<%- include('../../admin-matrix-footer.ejs') %>

@@ -1,0 +1,40 @@
+<%- include('../../cabecalho.ejs') %>
+    <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <a href="/cliente" class="card-link view">← Voltar para Cliente</a>
+        <a href="/cliente/posts/add" class="card-link create">+ Novo Post</a>
+    </div>
+    <h1>Meus Posts</h1>
+    <form method="get" action="/cliente/posts/lst" style="margin-bottom: 16px;">
+        <input type="text" name="busca" placeholder="Pesquisar por Título ou Artista"
+            value="<%= typeof busca !== 'undefined' ? busca : '' %>">
+        <button type="submit">Buscar</button>
+    </form>
+    <table>
+        <tr>
+            <td>Título</td>
+            <td>Artista</td>
+            <td>Artes</td>
+        </tr>
+        <% if (Posts && Posts.length > 0) { %>
+            <% Posts.forEach(post => { %>
+                <tr>
+                    <td>
+                        <strong><%= post.titulo %></strong>
+                    </td>
+                    <td>
+                        <%= post.artista %>
+                    </td>
+                    <td>
+                        <% if (post.artes && post.artes.length > 0) { %>
+                            <%= post.artes.join(', ') %>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+        <% } else { %>
+            <tr>
+                <td colspan="3">nada foi encontrado, verifique se digitou corretamente</td>
+            </tr>
+        <% } %>
+    </table>
+    <%- include('../../rodape.ejs') %>

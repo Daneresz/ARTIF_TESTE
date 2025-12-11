@@ -1,0 +1,29 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>✏️ EDITAR ARTE</h1>
+            <p class="subtitle">> Modify Artwork Profile</p>
+        </div>
+
+        <div style="max-width: 600px; margin: 0 auto;">
+            <a href="/admin/artes/lst" class="btn" style="margin-bottom: 20px;">← Voltar à Lista</a>
+            
+            <form method="post" action="/admin/artes/edt/<%= Arte._id %>" enctype="multipart/form-data" class="admin-form">
+                <div class="form-group">
+                    <label>📝 Título da Arte:</label>
+                    <input type="text" name="titulo" value="<%= Arte.titulo %>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>📄 Descrição (opcional):</label>
+                    <textarea name="descricao" rows="4"><%= Arte.descricao %></textarea>
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <a href="/admin/artes/lst" class="btn" style="flex: 1; text-align: center;">Cancelar</a>
+                    <button type="submit" class="btn" style="flex: 1;">✓ Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+
+<%- include('../../admin-matrix-footer.ejs') %>

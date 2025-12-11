@@ -1,0 +1,111 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>👁️ VISUALIZAR COMUNIDADE</h1>
+            <p class="subtitle">> <%= comunidade.nome %></p>
+        </div>
+
+        <div style="max-width: 900px; margin: 0 auto;">
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <a href="/admin/comunidades/lst" class="btn">← Voltar</a>
+            </div>
+            
+            <div style="border: 2px solid #00ff00; background: rgba(0,255,0,0.05); padding: 20px; margin-bottom: 20px;">
+                <div style="color: #00ff00; font-family: 'Courier New'; font-weight: bold;">
+                    <div style="margin-bottom: 10px;"><strong>📝 Nome:</strong> <%= comunidade.nome %></div>
+                    <div style="margin-bottom: 10px;"><strong>📄 Descrição:</strong> <%= comunidade.descricao %></div>
+                    <div><strong>🎨 Arte:</strong> <%= comunidade.arte %></div>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <a href="/admin/comunidades/edt/<%= comunidade._id %>" class="btn" style="flex: 1; text-align: center;">✏️ Editar</a>
+                <button class="btn" style="flex: 1; background-color: #00ff00; color: #000; cursor: pointer;" onclick="openAdmPostModal()">📝 Postar como ADM</button>
+            </div>
+            
+            <div class="admin-header" style="margin: 30px 0 20px 0;">
+                <h2 style="margin: 0; font-size: 18px;">📝 POSTS DA COMUNIDADE</h2>
+            </div>
+            
+            <% if (posts && posts.length > 0) { %>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <% posts.forEach(post => { %>
+                        <div style="border: 2px solid #00ff00; background: rgba(0,255,0,0.05); padding: 15px;">
+                            <div style="color: #00ff00; font-family: 'Courier New'; font-weight: bold; margin-bottom: 10px;">
+                                <% if (post.artistaDeletado) { %>
+                                    👤 Usuário Deletado
+                                <% } else if (post.artista === 'ADM') { %>
+                                    📢 ADM [ADMINISTRADOR]
+                                <% } else { %>
+                                    <%= post.artista %>
+                                <% } %>
+                            </div>
+                            
+                            <div style="color: #00ff00; margin-bottom: 10px; line-height: 1.6;">
+                                <%= post.descricao %>
+                            </div>
+                            
+                            <% if (post.imagem) { %>
+                                <img src="<%= post.imagem %>" alt="Post" style="max-width: 100%; max-height: 300px; margin-bottom: 10px; border: 2px solid #00ff00;">
+                            <% } %>
+                            
+                            <div>
+                                <a href="#" class="btn delete" style="padding: 5px 10px; font-size: 12px;" onclick="event.preventDefault(); openGlobalConfirm('/admin/comunidades/ver/<%= comunidade._id %>/post/<%= post._id %>/del', 'Tem certeza que deseja deletar este post?')">🗑️ Deletar</a>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div style="text-align: center; padding: 40px; border: 2px dashed #00ff00; color: #00ff00; font-family: 'Courier New'; font-weight: bold;">
+                    [  Nenhum post nesta comunidade ainda  ]
+                </div>
+            <% } %>
+        </div>
+
+        <!-- Modal ADM Post -->
+        <div class="adm-post-modal" id="admPostModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 1001; align-items: center; justify-content: center;">
+            <div style="background: #000; border: 2px solid #00ff00; padding: 30px; max-width: 500px; width: 90%;">
+                <h2 style="color: #00ff00; font-family: 'Courier New'; margin: 0 0 20px 0;">📝 NOVO POST ADM</h2>
+                <form method="post" action="/admin/comunidades/<%= comunidade._id %>/post" enctype="multipart/form-data">
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; color: #00ff00; font-family: 'Courier New'; font-weight: bold; margin-bottom: 5px;">Mensagem:</label>
+                        <textarea id="descricao" name="descricao" placeholder="O que você quer compartilhar?" required style="width: 100%; height: 100px; background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 10px; font-family: 'Courier New'; font-weight: bold; resize: none;"></textarea>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; color: #00ff00; font-family: 'Courier New'; font-weight: bold; margin-bottom: 5px;">Imagem (opcional):</label>
+                        <input type="file" id="admImagem" name="imagem" accept="image/*" style="color: #00ff00;">
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" class="btn" style="flex: 1; text-align: center;" onclick="closeAdmPostModal()">Cancelar</button>
+                        <button type="submit" class="btn" style="flex: 1; text-align: center; background-color: #00ff00; color: #000;">✓ Postar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function openAdmPostModal() {
+                document.getElementById('admPostModal').style.display = 'flex';
+                document.getElementById('descricao').focus();
+            }
+
+            function closeAdmPostModal() {
+                document.getElementById('admPostModal').style.display = 'none';
+            }
+
+            document.getElementById('admPostModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeAdmPostModal();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAdmPostModal();
+                }
+            });
+        </script>
+
+<%- include('../../admin-matrix-footer.ejs') %>

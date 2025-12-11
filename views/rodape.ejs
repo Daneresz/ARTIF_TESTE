@@ -1,0 +1,58 @@
+
+<!--Rodapé-->
+</div> <!--div container-->
+
+<!-- Modal de Confirmação Global de Deletar -->
+<div class="confirm-delete-modal" id="globalConfirmModal">
+  <div class="confirm-delete-content">
+    <h3>Tem certeza?</h3>
+    <p id="confirmMessage">Tem certeza que deseja deletar este item? Esta ação não pode ser desfeita.</p>
+    <div class="confirm-delete-actions">
+      <button class="confirm-delete-btn cancel" onclick="closeGlobalConfirm()">Cancelar</button>
+      <button class="confirm-delete-btn delete" onclick="confirmGlobalDelete()">Deletar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let globalDeleteUrl = '';
+
+  function openGlobalConfirm(url, message = null) {
+    globalDeleteUrl = url;
+    if (message) {
+      document.getElementById('confirmMessage').textContent = message;
+    } else {
+      document.getElementById('confirmMessage').textContent = 'Tem certeza que deseja deletar este item? Esta ação não pode ser desfeita.';
+    }
+    document.getElementById('globalConfirmModal').classList.add('active');
+  }
+
+  function closeGlobalConfirm() {
+    document.getElementById('globalConfirmModal').classList.remove('active');
+    globalDeleteUrl = '';
+  }
+
+  function confirmGlobalDelete() {
+    if (globalDeleteUrl) {
+      window.location.href = globalDeleteUrl;
+    }
+  }
+
+  // Fechar ao clicar fora
+  document.getElementById('globalConfirmModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeGlobalConfirm();
+    }
+  });
+
+  // Fechar com Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeGlobalConfirm();
+    }
+  });
+</script>
+
+</body>
+</html>
+<!--Fim Rodapé-->

@@ -1,0 +1,988 @@
+/* --------- ESTILO AESTHETIC EM VERMELHO + LARANJA --------- */
+
+/* Fundo com leve gradiente */
+body {
+  font-family: "Poppins", Arial, sans-serif;
+  background: linear-gradient(135deg, rgba(229, 57, 53, 0.10), rgba(249, 168, 37, 0.10));
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Container com efeito glass suave */
+.container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 35px;
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
+  width: 85%;
+  max-width: 1100px;
+  border: 1px solid rgba(229, 57, 53, 0.25);
+  backdrop-filter: blur(6px);
+  margin: 20px 0;
+}
+
+/* Título aesthetic */
+h1 {
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #E53935, #F9A825);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 35px;
+  font-size: 2.1rem;
+}
+
+/* ----------------- FORM ------------------ */
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: inline-block;
+  margin-bottom: 6px;
+  color: #E53935;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid rgba(229, 57, 53, 0.4);
+  border-radius: 14px;
+  transition: 0.2s;
+  font-size: 0.95rem;
+}
+
+/* glass focus */
+.form-group input:focus {
+  border-color: #E53935;
+  box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.15),
+    0 0 8px rgba(249, 168, 37, 0.4);
+  outline: none;
+}
+
+/* ----------------- MENU ------------------ */
+
+.menu ul {
+  display: flex;
+  list-style: none;
+  gap: 16px;
+  padding: 0;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.menu ul li a {
+  position: relative;
+  color: #E53935;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 999px;
+  transition: 0.2s;
+}
+
+.menu ul li a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 0%;
+  height: 3px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #E53935, #F9A825);
+  transform: translateX(-50%);
+  transition: 0.25s ease;
+}
+
+.menu ul li a:hover::after {
+  width: 70%;
+}
+
+.menu ul li a:hover {
+  background: rgba(249, 168, 37, 0.12);
+  color: #F9A825;
+}
+
+/* ----------------- BOTÕES AESTHETIC ------------------ */
+
+.btn {
+  display: inline-block;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #fff;
+  transition: 0.25s ease;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #E53935, #F9A825);
+  box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* Editar → laranja sólido */
+.btn.edit {
+  background: #F9A825;
+}
+
+.btn.edit:hover {
+  background: #FF9800;
+  box-shadow: 0 8px 20px rgba(249, 168, 37, 0.4);
+}
+
+/* Excluir → vermelho escuro */
+.btn.delete {
+  background: #C62828;
+}
+
+.btn.delete:hover {
+  background: #B71C1C;
+  box-shadow: 0 8px 20px rgba(198, 40, 40, 0.4);
+}
+
+/* Cancelar → tom suave da paleta */
+.btn.cancelar {
+  background: rgba(229, 57, 53, 0.6);
+}
+
+/* ----------------- TABELA ------------------ */
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 25px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(249, 168, 37, 0.3);
+  background: #fff;
+}
+
+table th {
+  background: linear-gradient(90deg, #E53935, #F9A825);
+  color: #fff;
+  padding: 14px 12px;
+  text-align: left;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid rgba(229, 57, 53, 0.2);
+  font-size: 0.9rem;
+}
+
+table tr:last-child td {
+  border-bottom: none;
+}
+
+table tr {
+  transition: 0.2s ease;
+}
+
+table tr:hover {
+  background-color: rgba(249, 168, 37, 0.12);
+}
+
+/* Barra de busca alinhada à direita */
+.search {
+  text-align: right;
+  margin-bottom: 15px;
+}
+
+.search input {
+  border-radius: 999px;
+  padding: 10px 14px;
+}
+
+/* Scrollbar aesthetic (chrome/edge) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(229, 57, 53, 0.05);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(229, 57, 53, 0.4);
+  border-radius: 10px;
+}
+
+/* ---------- PADRÃO DE FONTE GLOBAL ---------- */
+* {
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+/* Ajustes finos nas áreas que às vezes “quebram” fonte */
+.menu ul li a,
+.btn,
+table,
+table th,
+table td,
+.form-group input,
+.form-group label,
+.search input {
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+/* --------- PATCH AESTHETIC SEM MEXER NO HTML --------- */
+
+/* Form padrão (pega seus <div> simples) */
+form>div {
+  margin-bottom: 18px;
+}
+
+/* Labels bonitos */
+form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: #E53935;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+/* Inputs padrão */
+form input[type="text"],
+form input[type="file"],
+form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid rgba(229, 57, 53, 0.4);
+  border-radius: 14px;
+  transition: 0.2s ease;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+/* Efeito focus bonito */
+form input:focus,
+form textarea:focus {
+  outline: none;
+  border-color: #E53935;
+  box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.12),
+    0 0 8px rgba(249, 168, 37, 0.35);
+}
+
+/* Botões padrão (como seu HTML usa <button> normal) */
+form button,
+a[href*="/add"],
+a[href*="/edt"],
+a[href*="/del"] {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(90deg, #E53935, #F9A825);
+  color: #fff;
+  font-weight: 500;
+  font-family: "Poppins", Arial, sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.25s ease;
+  box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
+}
+
+/* Hover padrão */
+form button:hover,
+a[href*="/add"]:hover,
+a[href*="/edt"]:hover,
+a[href*="/del"]:hover {
+  transform: translateY(-1px) scale(1.02);
+  opacity: 0.9;
+}
+
+/* Título h1 mais lindo ainda */
+h1 {
+  font-family: "Poppins", Arial, sans-serif;
+  letter-spacing: 2px;
+}
+
+/* Tabela pega mesmo sem class */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+table th,
+table td {
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+/* Inputs da busca */
+form[method="get"] input[type="text"] {
+  border-radius: 999px;
+  padding: 10px 14px;
+}
+
+/* Select inputs styling */
+form select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid rgba(229, 57, 53, 0.4);
+  border-radius: 14px;
+  transition: 0.2s ease;
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 0.95rem;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+form select:focus {
+  outline: none;
+  border-color: #E53935;
+  box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.12),
+    0 0 8px rgba(249, 168, 37, 0.35);
+}
+
+/* Textarea styling */
+form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Input number */
+form input[type="number"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid rgba(229, 57, 53, 0.4);
+  border-radius: 14px;
+  transition: 0.2s ease;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+form input[type="number"]:focus {
+  outline: none;
+  border-color: #E53935;
+  box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.12),
+    0 0 8px rgba(249, 168, 37, 0.35);
+}
+
+/* Links gerais mais aesthetic */
+a {
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+/* ---------- CORREÇÃO: botão "Novo(a) Artista" ---------- */
+
+/* Reverter qualquer regra genérica que afete todos os <a> */
+a[href*="/add"],
+a[href*="/edt"],
+a[href*="/del"] {
+  all: unset;
+  /* remove estilos herdados problemáticos */
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+/* Estilo específico pro link de adicionar (somente esse) */
+a[href="/artista/add"] {
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #E53935, #F9A825);
+  color: #fff;
+  font-weight: 500;
+  font-family: "Poppins", Arial, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  vertical-align: middle;
+}
+
+/* Links de adicionar em geral (artista e artes) */
+a[href="/artista/add"],
+a[href="/artes/add"] {
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #E53935, #F9A825);
+  color: #fff;
+  font-weight: 500;
+  font-family: "Poppins", Arial, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  vertical-align: middle;
+}
+
+/* Hover / foco pro adicionar */
+a[href="/artista/add"]:hover,
+a[href="/artista/add"]:focus {
+  transform: translateY(-2px) scale(1.01);
+  opacity: 0.95;
+  outline: none;
+}
+
+/* Restaurar comportamento neutro para outros links (editar/excluir) e estilizar separadamente */
+a[href^="/artista/edt"] {
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  text-decoration: none;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+a[href^="/artista/del"] {
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  text-decoration: none;
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+/* Se quiser que editar/excluir também fiquem com as cores originais: */
+a[href^="/artista/edt"] {
+  background: #F9A825;
+  color: #000;
+}
+
+a[href^="/artista/del"] {
+  background: #C62828;
+  color: #fff;
+}
+
+/* Garante que nada invisível esteja encima do botão */
+a[href="/artista/add"] {
+  position: relative;
+  z-index: 3;
+}
+
+/* --------- ESTILOS PARA MUSIC-LIST (VISUALIZAÇÃO PÚBLICA) --------- */
+
+.music-list {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.music-item {
+  background: #fff;
+  border: 1px solid rgba(249, 168, 37, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: 0.25s ease;
+}
+
+.music-item:hover {
+  box-shadow: 0 8px 25px rgba(229, 57, 53, 0.15);
+  border-color: rgba(249, 168, 37, 0.6);
+}
+
+.music-summary {
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: linear-gradient(90deg, rgba(229, 57, 53, 0.05), rgba(249, 168, 37, 0.05));
+}
+
+.music-summary h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #E53935;
+  letter-spacing: 0.5px;
+}
+
+.expand-btn {
+  padding: 8px 16px;
+  background: linear-gradient(90deg, #E53935, #F9A825);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: "Poppins", Arial, sans-serif;
+  transition: 0.2s ease;
+  font-size: 0.85rem;
+}
+
+.expand-btn:hover {
+  transform: translateY(-1px) scale(1.05);
+  opacity: 0.9;
+}
+
+.music-details {
+  padding: 16px 18px;
+  border-top: 1px solid rgba(229, 57, 53, 0.1);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.music-details img {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.2);
+}
+
+.music-details p {
+  margin: 8px 0;
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.music-details strong {
+  color: #E53935;
+}
+
+.music-details pre {
+  background: rgba(229, 57, 53, 0.05);
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 4px solid #E53935;
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+
+/* --------- CHECKBOX GROUP --------- */
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(249, 168, 37, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(229, 57, 53, 0.2);
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(229, 57, 53, 0.3);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.checkbox-item:hover {
+  border-color: #E53935;
+  background: rgba(229, 57, 53, 0.08);
+  transform: translateY(-2px);
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #E53935;
+}
+
+.checkbox-item input[type="checkbox"]:checked {
+  accent-color: #F9A825;
+}
+
+.checkbox-label {
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.checkbox-item input[type="checkbox"]:checked + .checkbox-label {
+  color: #E53935;
+  font-weight: 600;
+}
+
+/* --------- CHOICE BUTTONS (HOME PAGE) --------- */
+
+.choice-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 50px;
+  background: linear-gradient(135deg, #ffffff, #f5f5f5);
+  border: 2px solid rgba(229, 57, 53, 0.3);
+  border-radius: 20px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  min-width: 250px;
+  box-shadow: 0 8px 20px rgba(229, 57, 53, 0.1);
+}
+
+.choice-btn:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(229, 57, 53, 0.2);
+  border-color: #E53935;
+}
+
+.choice-btn i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #E53935;
+}
+
+.choice-btn h3 {
+  margin: 10px 0;
+  color: #E53935;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.choice-btn p {
+  margin: 5px 0 0 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.choice-btn.admin-btn {
+  border-color: rgba(249, 168, 37, 0.3);
+}
+
+.choice-btn.admin-btn i {
+  color: #F9A825;
+}
+
+.choice-btn.admin-btn h3 {
+  color: #F9A825;
+}
+
+.choice-btn.admin-btn:hover {
+  border-color: #F9A825;
+  box-shadow: 0 15px 35px rgba(249, 168, 37, 0.2);
+}
+
+/* --------- ADMIN & CLIENTE CARDS --------- */
+
+.admin-card,
+.cliente-card {
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
+  border: 2px solid rgba(229, 57, 53, 0.2);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 20px rgba(229, 57, 53, 0.08);
+  transition: all 0.3s ease;
+}
+
+.admin-card:hover,
+.cliente-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(229, 57, 53, 0.15);
+  border-color: #E53935;
+}
+
+.admin-card h3,
+.cliente-card h3 {
+  color: #E53935;
+  font-size: 1.4rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.admin-card h3 i,
+.cliente-card h3 i {
+  font-size: 1.6rem;
+}
+
+.card-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-link {
+  display: inline-block;
+  padding: 12px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+.card-link.view {
+  background: rgba(229, 57, 53, 0.1);
+  color: #E53935;
+  border-color: #E53935;
+}
+
+.card-link.view:hover {
+  background: #E53935;
+  color: white;
+  transform: translateX(4px);
+}
+
+.card-link.create {
+  background: rgba(76, 175, 80, 0.1);
+  color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+.card-link.create:hover {
+  background: #4CAF50;
+  color: white;
+  transform: translateX(4px);
+}
+
+.card-link.manage {
+  background: rgba(249, 168, 37, 0.1);
+  color: #F9A825;
+  border-color: #F9A825;
+}
+
+.card-link.manage:hover {
+  background: #F9A825;
+  color: white;
+  transform: translateX(4px);
+}
+
+/* --------- MODAL DE CONFIRMAÇÃO GLOBAL --------- */
+
+.confirm-delete-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+.confirm-delete-modal.active {
+  display: flex;
+}
+
+.confirm-delete-content {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(229, 57, 53, 0.25);
+  text-align: center;
+  backdrop-filter: blur(6px);
+  margin: auto;
+}
+
+.confirm-delete-content h3 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
+}
+
+.confirm-delete-content p {
+  margin: 0 0 25px 0;
+  color: #555;
+  font-size: 15px;
+}
+
+.confirm-delete-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.confirm-delete-btn {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.confirm-delete-btn.cancel {
+  background: rgba(229, 57, 53, 0.1);
+  color: #E53935;
+  border: 2px solid rgba(229, 57, 53, 0.4);
+}
+
+.confirm-delete-btn.cancel:hover {
+  background: rgba(229, 57, 53, 0.2);
+  border-color: #F9A825;
+  color: #F9A825;
+}
+
+.confirm-delete-btn.delete {
+  background: linear-gradient(90deg, #E53935, #F9A825);
+  color: white;
+  box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
+}
+
+.confirm-delete-btn.delete:hover {
+  transform: translateY(-1px) scale(1.01);
+  opacity: 0.9;
+}
+
+/* -------- BTN POSTAR COMO ADM -------- */
+.btn-postar-adm {
+  padding: 10px 16px;
+  background: linear-gradient(90deg, #E53935, #F9A825);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: 0.2s;
+  box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
+  white-space: nowrap;
+}
+
+.btn-postar-adm:hover {
+  transform: translateY(-1px) scale(1.01);
+  opacity: 0.9;
+}
+
+/* -------- MODAL POSTAR COMO ADM -------- */
+.adm-post-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+.adm-post-modal.active {
+  display: flex;
+}
+
+.adm-modal-content {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(229, 57, 53, 0.25);
+  backdrop-filter: blur(6px);
+  margin: auto;
+}
+
+.adm-modal-content h2 {
+  margin: 0 0 20px 0;
+  font-size: 24px;
+  background: linear-gradient(90deg, #E53935, #F9A825);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 600;
+}
+
+.adm-form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.adm-form-group label {
+  font-weight: 600;
+  color: #E53935;
+  font-size: 14px;
+}
+
+.adm-form-group input,
+.adm-form-group textarea {
+  padding: 12px 14px;
+  border: 2px solid rgba(229, 57, 53, 0.4);
+  border-radius: 14px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: 0.2s;
+}
+
+.adm-form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.adm-form-group input:focus,
+.adm-form-group textarea:focus {
+  outline: none;
+  border-color: #E53935;
+  box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.15), 0 0 8px rgba(249, 168, 37, 0.4);
+}
+
+.adm-modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.adm-btn-cancel {
+  padding: 10px 20px;
+  border: 2px solid rgba(229, 57, 53, 0.4);
+  background: white;
+  color: #E53935;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.adm-btn-cancel:hover {
+  background: rgba(229, 57, 53, 0.1);
+  border-color: #F9A825;
+  color: #F9A825;
+}
+
+.adm-btn-submit {
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #E53935, #F9A825);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  box-shadow: 0 8px 20px rgba(229, 57, 53, 0.3);
+}
+
+.adm-btn-submit:hover {
+  transform: translateY(-1px) scale(1.01);
+  opacity: 0.9;
+}

@@ -1,0 +1,42 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>📝 GERENCIAR POSTS</h1>
+            <p class="subtitle">> List Management System</p>
+        </div>
+
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <a href="/admin" class="btn">← Voltar ao Painel</a>
+                <a href="/admin/posts/add" class="btn" style="background-color: #00ff00; color: #000;">➕ Criar Post</a>
+            </div>
+            
+            <form method="get" action="/admin/posts/lst" style="margin-bottom: 20px; display: flex; gap: 10px;">
+                <input type="text" name="busca" placeholder="Pesquisar por Título ou Artista" value="<%= typeof busca !== 'undefined' ? busca : '' %>" style="flex: 1; background: #000; color: #00ff00; border: 2px solid #00ff00; padding: 10px; font-family: 'Courier New'; font-weight: bold;">
+                <button type="submit" class="btn">🔍 Buscar</button>
+            </form>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
+                <% if (Posts && Posts.length > 0) { %>
+                    <% Posts.forEach(post => { %>
+                        <div style="border: 2px solid #00ff00; background: rgba(0,255,0,0.05); padding: 15px; color: #00ff00; font-family: 'Courier New';">
+                            <h3 style="margin: 0 0 10px 0; color: #00ff00; font-size: 16px;"><%= post.titulo %></h3>
+                            <div style="font-size: 12px; margin-bottom: 10px;">👤 <%= post.artista %></div>
+                            <% if (post.artes && post.artes.length > 0) { %>
+                                <div style="font-size: 11px; background: rgba(0,255,0,0.2); padding: 5px; margin-bottom: 10px; border-left: 2px solid #00ff00;">🎨 <%= post.artes.join(', ') %></div>
+                            <% } %>
+                            <div style="display: flex; gap: 5px;">
+                                <a href="/admin/posts/edt/<%= post._id %>" class="btn edit" style="flex: 1; padding: 5px 10px; font-size: 12px; text-align: center;">✏️ Editar</a>
+                                <a href="#" class="btn delete" style="flex: 1; padding: 5px 10px; font-size: 12px; text-align: center;" onclick="event.preventDefault(); openGlobalConfirm('/admin/posts/del/<%= post._id %>', 'Tem certeza que deseja deletar este post?')">🗑️ Deletar</a>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #00ff00; border: 2px dashed #00ff00;">
+                        [  Nenhum post encontrado  ]
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+<%- include('../../admin-matrix-footer.ejs') %>

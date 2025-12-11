@@ -1,0 +1,42 @@
+<%- include('../cabecalho.ejs') %>
+    <h1>Editar Perfil</h1>
+    <form method="post" action="/artista/edt/<%= Musica._id %>" enctype="multipart/form-data">
+        <div>
+            <label>Artista</label>
+            <input type="text" name="artista" value="<%= Musica.artista %>" required>
+        </div>
+        <div>
+            <label>Artes (pode selecionar mais de 1 ou nenhuma):</label>
+            <div class="checkbox-group">
+                <% const isExploring = !Musica.artes || Musica.artes.length === 0 %>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="explorer" value="true" <% if (isExploring) { %>checked<% } %>>
+                    <span class="checkbox-label">Apenas Explorando</span>
+                </label>
+                <% if (Artes && Artes.length > 0) { %>
+                    <% Artes.forEach(arte => { %>
+                        <% const isSelected = Musica.artes && Musica.artes.includes(arte.titulo) %>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="artes" value="<%= arte.titulo %>" <% if (isSelected) { %>checked<% } %>>
+                            <span class="checkbox-label"><%= arte.titulo %></span>
+                        </label>
+                    <% }) %>
+                <% } %>
+            </div>
+        </div>
+        <div>
+            <label>Idade:</label>
+            <input type="number" name="idade" value="<%= Musica.idade %>" required>
+        </div>
+        <div>
+            <label>Imagem (capa)</label>
+            <% if (Musica.perfil) { %>
+                <div><img src="<%= Musica.perfil %>" style="width:120px;height:auto"></div>
+            <% } %>
+            <input type="file" name="perfil" accept="image/*">
+        </div>
+        <!-- YouTube field hidden but preserved -->
+        <input type="hidden" name="youtube" value="<%= Musica.youtube %>">
+        <button type="submit">Salvar</button>
+    </form>
+    <%- include('../rodape.ejs') %>

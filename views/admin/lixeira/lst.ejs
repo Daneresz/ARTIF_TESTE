@@ -1,0 +1,108 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>🗑️ LIXEIRA</h1>
+            <p class="subtitle">> Trash Management System</p>
+        </div>
+
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <a href="/admin" class="btn">← Voltar ao Painel</a>
+                <% if (deletedItems && deletedItems.length > 0) { %>
+                    <button class="btn" style="background-color: #ff0000; color: #000;" onclick="openGlobalConfirm('/admin/lixeira/esvaziar', 'Tem certeza que deseja esvaziar a lixeira permanentemente? Esta ação não pode ser desfeita.') ">🗑️ Esvaziar Lixeira</button>
+                <% } %>
+            </div>
+            
+            <% if (!deletedItems || deletedItems.length === 0) { %>
+                <div style="text-align: center; padding: 60px 20px; border: 2px dashed #00ff00; color: #00ff00; font-family: 'Courier New'; font-weight: bold;">
+                    [  A LIXEIRA ESTÁ VAZIA  ]
+                </div>
+            <% } else { %>
+                <!-- Músicas/Artistas -->
+                <% if (items.musica && items.musica.length > 0) { %>
+                    <div style="margin-top: 30px;">
+                        <h2 style="color: #00ff00; font-family: 'Courier New'; margin-bottom: 20px;">🎵 ARTISTAS DELETADOS (<%= items.musica.length %>)</h2>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <% items.musica.forEach(item => { %>
+                                <div style="border: 2px solid #00ff00; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="color: #00ff00; font-family: 'Courier New'; font-weight: bold;">
+                                        <div><%= item.dados.artista || 'Sem nome' %></div>
+                                        <div style="font-size: 12px; color: #00aa00; margin-top: 5px;">⏰ Deletado em: <%= new Date(item.deletadoEm).toLocaleDateString('pt-BR') %> <%= new Date(item.deletadoEm).toLocaleTimeString('pt-BR') %></div>
+                                    </div>
+                                    <div style="display: flex; gap: 5px;">
+                                        <a href="/admin/lixeira/restaurar/<%= item._id %>" class="btn" style="padding: 5px 10px; font-size: 12px; background-color: #00ff00; color: #000;">↺ Restaurar</a>
+                                        <a href="#" class="btn delete" style="padding: 5px 10px; font-size: 12px;" onclick="event.preventDefault(); openGlobalConfirm('/admin/lixeira/deletar/<%= item._id %>', 'Deletar este item permanentemente? Esta ação não pode ser desfeita.')">🗑️ Deletar</a>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                <% } %>
+
+                <!-- Artes -->
+                <% if (items.arte && items.arte.length > 0) { %>
+                    <div style="margin-top: 30px;">
+                        <h2 style="color: #00ff00; font-family: 'Courier New'; margin-bottom: 20px;">🎨 ARTES DELETADAS (<%= items.arte.length %>)</h2>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <% items.arte.forEach(item => { %>
+                                <div style="border: 2px solid #00ff00; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="color: #00ff00; font-family: 'Courier New'; font-weight: bold;">
+                                        <div><%= item.dados.titulo || 'Sem nome' %></div>
+                                        <div style="font-size: 12px; color: #00aa00; margin-top: 5px;">⏰ Deletado em: <%= new Date(item.deletadoEm).toLocaleDateString('pt-BR') %> <%= new Date(item.deletadoEm).toLocaleTimeString('pt-BR') %></div>
+                                    </div>
+                                    <div style="display: flex; gap: 5px;">
+                                        <a href="/admin/lixeira/restaurar/<%= item._id %>" class="btn" style="padding: 5px 10px; font-size: 12px; background-color: #00ff00; color: #000;">↺ Restaurar</a>
+                                        <a href="#" class="btn delete" style="padding: 5px 10px; font-size: 12px;" onclick="event.preventDefault(); openGlobalConfirm('/admin/lixeira/deletar/<%= item._id %>', 'Deletar este item permanentemente? Esta ação não pode ser desfeita.')">🗑️ Deletar</a>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                <% } %>
+
+                <!-- Comunidades -->
+                <% if (items.comunidade && items.comunidade.length > 0) { %>
+                    <div style="margin-top: 30px;">
+                        <h2 style="color: #00ff00; font-family: 'Courier New'; margin-bottom: 20px;">👥 COMUNIDADES DELETADAS (<%= items.comunidade.length %>)</h2>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <% items.comunidade.forEach(item => { %>
+                                <div style="border: 2px solid #00ff00; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="color: #00ff00; font-family: 'Courier New'; font-weight: bold;">
+                                        <div><%= item.dados.nome || 'Sem nome' %></div>
+                                        <div style="font-size: 12px; color: #00aa00; margin-top: 5px;">⏰ Deletado em: <%= new Date(item.deletadoEm).toLocaleDateString('pt-BR') %> <%= new Date(item.deletadoEm).toLocaleTimeString('pt-BR') %></div>
+                                    </div>
+                                    <div style="display: flex; gap: 5px;">
+                                        <a href="/admin/lixeira/restaurar/<%= item._id %>" class="btn" style="padding: 5px 10px; font-size: 12px; background-color: #00ff00; color: #000;">↺ Restaurar</a>
+                                        <a href="#" class="btn delete" style="padding: 5px 10px; font-size: 12px;" onclick="event.preventDefault(); openGlobalConfirm('/admin/lixeira/deletar/<%= item._id %>', 'Deletar este item permanentemente? Esta ação não pode ser desfeita.')">🗑️ Deletar</a>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                <% } %>
+
+                <!-- Posts -->
+                <% if (items.post && items.post.length > 0) { %>
+                    <div style="margin-top: 30px;">
+                        <h2 style="color: #00ff00; font-family: 'Courier New'; margin-bottom: 20px;">📝 POSTS DELETADOS (<%= items.post.length %>)</h2>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <% items.post.forEach(item => { %>
+                                <div style="border: 2px solid #00ff00; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="color: #00ff00; font-family: 'Courier New'; font-weight: bold;">
+                                        <div><%= item.dados.titulo || 'Sem título' %></div>
+                                        <div style="font-size: 12px; color: #00aa00; margin-top: 5px;">Autor: <%= item.dados.artista || 'Desconhecido' %></div>
+                                        <div style="font-size: 12px; color: #00aa00;">⏰ Deletado em: <%= new Date(item.deletadoEm).toLocaleDateString('pt-BR') %> <%= new Date(item.deletadoEm).toLocaleTimeString('pt-BR') %></div>
+                                    </div>
+                                    <div style="display: flex; gap: 5px;">
+                                        <a href="/admin/lixeira/restaurar/<%= item._id %>" class="btn" style="padding: 5px 10px; font-size: 12px; background-color: #00ff00; color: #000;">↺ Restaurar</a>
+                                        <a href="#" class="btn delete" style="padding: 5px 10px; font-size: 12px;" onclick="event.preventDefault(); openGlobalConfirm('/admin/lixeira/deletar/<%= item._id %>', 'Deletar este item permanentemente? Esta ação não pode ser desfeita.')">🗑️ Deletar</a>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+
+<%- include('../../admin-matrix-footer.ejs') %>

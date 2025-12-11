@@ -1,0 +1,53 @@
+<%- include('../cabecalho.ejs') %>
+    <h1>Editar Post</h1>
+    <form method="post" action="/posts/edt/<%= Post._id %>" enctype="multipart/form-data">
+        <div>
+            <label>Título do Post:</label>
+            <input type="text" name="titulo" value="<%= Post.titulo %>" required>
+        </div>
+        <div>
+            <label>Artista:</label>
+            <select name="artista" required>
+                <option value="<%= Post.artista %>"><%= Post.artista %></option>
+                <% if (Artistas && Artistas.length > 0) { %>
+                    <% Artistas.forEach(artista => { %>
+                        <% if (artista.artista !== Post.artista) { %>
+                            <option value="<%= artista.artista %>"><%= artista.artista %></option>
+                        <% } %>
+                    <% }) %>
+                <% } %>
+            </select>
+        </div>
+        <div>
+            <label>Artes (pode selecionar mais de 1 ou nenhuma):</label>
+            <div class="checkbox-group">
+                <% const isExploring = !Post.artes || Post.artes.length === 0 %>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="explorer" value="true" <% if (isExploring) { %>checked<% } %>>
+                    <span class="checkbox-label">Apenas Explorando</span>
+                </label>
+                <% if (Artes && Artes.length > 0) { %>
+                    <% Artes.forEach(arte => { %>
+                        <% const isSelected = Post.artes && Post.artes.includes(arte.titulo) %>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="artes" value="<%= arte.titulo %>" <% if (isSelected) { %>checked<% } %>>
+                            <span class="checkbox-label"><%= arte.titulo %></span>
+                        </label>
+                    <% }) %>
+                <% } %>
+            </div>
+        </div>
+        <div>
+            <label>Descrição (opcional):</label>
+            <textarea name="descricao" rows="4"><%= Post.descricao %></textarea>
+        </div>
+        <div>
+            <label>Imagem</label>
+            <% if (Post.imagem) { %>
+                <div><img src="<%= Post.imagem %>" style="width:120px;height:auto"></div>
+            <% } %>
+            <input type="file" name="imagem" accept="image/*">
+        </div>
+        <button type="submit">Salvar</button>
+    </form>
+    <%- include('../rodape.ejs') %>

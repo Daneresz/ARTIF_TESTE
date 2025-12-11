@@ -1,0 +1,52 @@
+<%- include('../../admin-matrix-header.ejs') %>
+
+        <div class="admin-header" style="margin-bottom: 40px;">
+            <h1>➕ CRIAR ARTISTA</h1>
+            <p class="subtitle">> New Artist Registration Interface</p>
+        </div>
+
+        <div style="max-width: 600px; margin: 0 auto;">
+            <a href="/admin" class="btn" style="margin-bottom: 20px;">← Voltar ao Painel</a>
+            
+            <form method="post" action="/admin/artista/add" enctype="multipart/form-data" class="admin-form">
+                <div class="form-group">
+                    <label>📷 Foto de Perfil:</label>
+                    <input type="file" name="perfil" accept="image/*">
+                </div>
+                
+                <div class="form-group">
+                    <label>👤 Nome do Artista:</label>
+                    <input type="text" name="artista" placeholder="Digite o nome..." required>
+                </div>
+                
+                <div class="form-group">
+                    <label>🎨 Artes (pode selecionar mais de 1):</label>
+                    <div style="background: rgba(0, 0, 0, 0.5); border: 2px solid rgba(0, 255, 0, 0.3); padding: 15px; border-radius: 0;">
+                        <label style="display: flex; align-items: center; margin-bottom: 10px; cursor: pointer;">
+                            <input type="checkbox" name="explorer" value="true" style="margin-right: 10px; cursor: pointer;">
+                            <span style="color: #00ff00;">Apenas Explorando</span>
+                        </label>
+                        <% if (Artes && Artes.length > 0) { %>
+                            <% Artes.forEach(arte => { %>
+                                <label style="display: flex; align-items: center; margin-bottom: 10px; cursor: pointer;">
+                                    <input type="checkbox" name="artes" value="<%= arte.titulo %>" style="margin-right: 10px; cursor: pointer;">
+                                    <span style="color: #00ff00;"><%= arte.titulo %></span>
+                                </label>
+                            <% }) %>
+                        <% } %>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>🎂 Idade:</label>
+                    <input type="number" name="idade" placeholder="Digite a idade..." required>
+                </div>
+                
+                <div style="display: flex; gap: 10px;">
+                    <a href="/admin" class="btn" style="flex: 1; text-align: center;">Cancelar</a>
+                    <button type="submit" class="btn" style="flex: 1;">✓ Salvar Artista</button>
+                </div>
+            </form>
+        </div>
+
+<%- include('../../admin-matrix-footer.ejs') %>
