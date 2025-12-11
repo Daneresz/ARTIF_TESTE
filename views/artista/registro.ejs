@@ -216,6 +216,12 @@
                 <input type="date" id="dataNascimento" name="dataNascimento" required>
             </div>
 
+            <div class="form-group">
+                <label for="fotoPerfil">Foto de Perfil (opcional)</label>
+                <input type="file" id="fotoPerfil" name="fotoPerfil" accept="image/*">
+                <p style="font-size: 12px; color: #999; margin-top: 5px;">Máximo 5MB. Formatos: JPG, PNG, GIF</p>
+            </div>
+
             <div class="artes-group">
                 <label>Áreas de Arte (opcional)</label>
                 <p style="font-size: 12px; color: #999; margin-bottom: 10px;">Se não selecionar nenhuma, você ficará como "Apenas Explorando"</p>
@@ -272,6 +278,7 @@
             const email = document.getElementById('email').value
             const senha = document.getElementById('senha').value
             const dataNascimento = document.getElementById('dataNascimento').value
+            const fotoPerfil = document.getElementById('fotoPerfil').files[0]
 
             // Validar senha
             if (senha.length < 6) {
@@ -284,18 +291,22 @@
             const artes = Array.from(document.querySelectorAll('input[name="artes"]:checked')).map(checkbox => checkbox.value)
 
             try {
+                // Criar FormData para enviar arquivo + dados
+                const formData = new FormData()
+                formData.append('artista', artista)
+                formData.append('email', email)
+                formData.append('senha', senha)
+                formData.append('dataNascimento', dataNascimento)
+                if (fotoPerfil) {
+                    formData.append('fotoPerfil', fotoPerfil)
+                }
+                artes.forEach(arte => {
+                    formData.append('artes', arte)
+                })
+
                 const response = await fetch('/api/auth/registro', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        artista,
-                        email,
-                        senha,
-                        dataNascimento,
-                        artes
-                    })
+                    body: formData
                 })
 
                 const data = await response.json()

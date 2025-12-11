@@ -1,5 +1,7 @@
 import Musica from '../models/musica.js'
 import bcrypt from 'bcryptjs'
+import fs from 'fs/promises'
+import path from 'path'
 
 export default class AuthController {
     static async registro(req, res) {
@@ -22,7 +24,38 @@ export default class AuthController {
             const senhaHash = await bcrypt.hash(senha, saltRounds)
 
             // Preparar artes (se vazio, fica "Apenas Explorando")
-            const artesArray = artes && artes.length > 0 ? artes : []
+            const artesArray = (artes && (Array.isArray(artes) ? artes.length > 0 : !!artes)) ? (Array.isArray(artes) ? artes : [artes]) : []
+
+            // Processar foto de perfil
+            let fotoPerfil = null
+            if (req.files && req.files.length > 0) {
+                const fotoFile = req.files.find(f => f.fieldname === 'fotoPerfil')
+                if (fotoFile) {
+                    // Gerar nome único para a foto
+                    const fotoNome = `artista-${Date.now()}-${fotoFile.originalname}`
+                    const uploadsDir = process.env.NODE_ENV === 'production' 
+                        ? '/tmp/uploads' 
+                        : path.join(process.cwd(), 'public/uploads')
+                    
+                    // Garantir que o diretório existe
+                    try {
+                        await fs.mkdir(uploadsDir, { recursive: true })
+                    } catch (err) {
+                        console.error('Erro ao criar diretório:', err)
+                    }
+
+                    const caminhoCompleto = path.join(uploadsDir, fotoNome)
+                    
+                    // Se o arquivo já foi salvo pelo multer, apenas usar o caminho
+                    if (fotoFile.path) {
+                        fotoPerfil = `/uploads/${fotoNome}`
+                    } else {
+                        // Se não, escrever o buffer
+                        await fs.writeFile(caminhoCompleto, fotoFile.buffer)
+                        fotoPerfil = `/uploads/${fotoNome}`
+                    }
+                }
+            }
 
             // Criar novo artista
             const novoArtista = new Musica({
@@ -31,6 +64,7 @@ export default class AuthController {
                 senha: senhaHash,
                 dataNascimento: new Date(dataNascimento),
                 artes: artesArray,
+                perfil: fotoPerfil,
                 explorer: artesArray.length === 0,
                 ativo: true
             })
