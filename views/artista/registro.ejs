@@ -247,7 +247,7 @@
                         const div = document.createElement('div')
                         div.className = 'arte-checkbox'
                         div.innerHTML = `
-                            <input type="checkbox" id="arte_${arte._id}" name="artes" value="${arte._id}">
+                            <input type="checkbox" id="arte_${arte._id}" name="artes" value="${arte.titulo}" data-id="${arte._id}">
                             <label for="arte_${arte._id}">${arte.titulo}</label>
                         `
                         artesOptions.appendChild(div)
@@ -280,7 +280,7 @@
                 return
             }
 
-            // Coletar artes selecionadas
+            // Coletar artes selecionadas (usando títulos)
             const artes = Array.from(document.querySelectorAll('input[name="artes"]:checked')).map(checkbox => checkbox.value)
 
             try {
