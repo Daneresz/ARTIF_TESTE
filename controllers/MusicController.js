@@ -178,7 +178,11 @@ export default class MusicController {
                     console.log(`Posts marcados como deletados:`, result)
                 }
                 await Musica.findByIdAndDelete(req.params.id)
-                res.redirect('/' + this.caminhoBase + 'lst')
+                
+                // Detectar se é rota de admin ou pública
+                const isAdmin = req.originalUrl.includes('/admin/')
+                const redirectUrl = isAdmin ? '/admin/artista/lst' : '/' + this.caminhoBase + 'lst'
+                res.redirect(redirectUrl)
             } catch (err) {
                 console.error('Erro ao deletar artista:', err)
                 res.status(500).send('Erro ao deletar artista')
