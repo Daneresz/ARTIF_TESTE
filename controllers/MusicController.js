@@ -102,7 +102,24 @@ export default class MusicController {
                     filtro = { $or: or }
                 }
                 const resultado = await Musica.find(filtro).sort({ createdAt: -1 })
-                res.render(this.caminhoBase + 'lst', { Musicas: resultado, busca })
+
+                // Resolver IDs de artes para títulos
+                const artistasComArtes = await Promise.all(resultado.map(async (artista) => {
+                    const artistaObj = artista.toObject()
+                    
+                    if (artistaObj.artes && artistaObj.artes.length > 0) {
+                        try {
+                            const artesTitulos = await Arte.find({ _id: { $in: artistaObj.artes } }).select('titulo')
+                            artistaObj.artes = artesTitulos.map(arte => arte.titulo)
+                        } catch (erro) {
+                            console.error('Erro ao resolver artes:', erro)
+                        }
+                    }
+                    
+                    return artistaObj
+                }))
+
+                res.render(this.caminhoBase + 'lst', { Musicas: artistasComArtes, busca })
             } catch (err) {
                 console.error('Erro ao listar artistas:', err)
                 res.status(500).send('Erro ao listar artistas')
