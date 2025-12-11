@@ -54,7 +54,7 @@
                         </td>
                         <td>
                             <a href="/artista/edt/<%= m._id %>" class="btn edit"><i class="fa fa-pen"></i> Editar</a>
-                            <a href="/artista/del/<%= m._id %>" class="btn delete"><i class="fa fa-trash"></i> Excluir</a>
+                            <a href="#" class="btn delete" onclick="event.preventDefault(); openGlobalConfirm('/artista/del/<%= m._id %>', 'Tem certeza que deseja deletar este artista? Esta ação não pode ser desfeita.')"><i class="fa fa-trash"></i> Excluir</a>
                         </td>
                     </tr>
                     <% } %>
