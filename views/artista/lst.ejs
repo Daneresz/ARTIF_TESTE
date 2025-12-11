@@ -12,9 +12,9 @@
     <table>
         <tr>
             <td>Perfil</td>
-            <td>Arte</td>
+            <td>Artes</td>
             <td>Artista</td>
-            <td>Idade</td>
+            <td>Data de Nascimento</td>
             <td>Ações</td>
         </tr>
         <% if (Musicas.length===0) { %>
@@ -30,13 +30,27 @@
                                 <% } %>
                         </td>
                         <td>
-                            <%= m.arte %>
+                            <% if (m.artes && m.artes.length > 0) { %>
+                                <% m.artes.forEach((arte, index) => { %>
+                                    <span style="display: inline-block; background: #667eea; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-right: 4px; margin-bottom: 4px;">
+                                        <%= arte %>
+                                    </span>
+                                <% }) %>
+                            <% } else { %>
+                                <span style="color: #999; font-style: italic;">Nenhuma arte</span>
+                            <% } %>
                         </td>
                         <td>
                             <%= m.artista %>
                         </td>
                         <td>
-                            <%= m.idade %>
+                            <% if (m.dataNascimento) { %>
+                                <%= new Date(m.dataNascimento).toLocaleDateString('pt-BR') %>
+                            <% } else if (m.idade) { %>
+                                <%= m.idade %> anos
+                            <% } else { %>
+                                -
+                            <% } %>
                         </td>
                         <td>
                             <a href="/artista/edt/<%= m._id %>" class="btn edit"><i class="fa fa-pen"></i> Editar</a>
