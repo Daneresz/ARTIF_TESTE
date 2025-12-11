@@ -34,6 +34,15 @@ const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } })
 
 const caminhobase = 'artes/'
 
+router.get('/api/artes/listar', async (req, res) => {
+    try {
+        const artes = await controle.model.find({})
+        res.json({ sucesso: true, artes })
+    } catch (erro) {
+        res.status(500).json({ sucesso: false, erro: erro.message })
+    }
+})
+
 router.get('/' + caminhobase, controle.publicList)
 router.get('/' + caminhobase + 'add', controle.openAdd)
 router.post('/' + caminhobase + 'add', controle.add)

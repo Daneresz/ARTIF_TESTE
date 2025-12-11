@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👤 Meu Perfil - ARTIF</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .profile-section {
+            padding: 30px 20px;
+        }
+
+        .perfil-foto {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .foto-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            overflow: hidden;
+        }
+
+        .foto-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 16px;
+        }
+
+        .artes-list {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            grid-column: 1 / -1;
+        }
+
+        .artes-list .info-label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .artes-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .arte-tag {
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .explorer-badge {
+            background: #fffbea;
+            color: #ff9800;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #eee;
+            color: #333;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <a href="/cliente" class="back-link">← Voltar</a>
+
+    <div class="container">
+        <div class="header">
+            <h1>👤 Meu Perfil</h1>
+        </div>
+
+        <div class="profile-section">
+            <div class="error" id="erro"></div>
+
+            <div class="perfil-foto">
+                <div class="foto-container" id="fotoContainer">
+                    <span id="fotoEmoji">🎨</span>
+                </div>
+                <p style="color: #666; font-size: 14px;">
+                    <input type="file" id="fotoUpload" style="display: none;" accept="image/*">
+                    <a href="#" onclick="document.getElementById('fotoUpload').click(); return false;" style="color: #667eea; text-decoration: none;">Alterar foto</a>
+                </p>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Nome do Artista</div>
+                    <div class="info-value" id="nomeArtista">-</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Email</div>
+                    <div class="info-value" id="emailArtista">-</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Data de Nascimento</div>
+                    <div class="info-value" id="dataNasc">-</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Status</div>
+                    <div class="info-value">
+                        <span id="statusBadge">-</span>
+                    </div>
+                </div>
+
+                <div class="artes-list">
+                    <label class="info-label">Áreas de Arte</label>
+                    <div class="artes-tags" id="artesTags">
+                        Carregando...
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="abrirEdicao()">✏️ Editar Perfil</button>
+                <button class="btn btn-secondary" onclick="fazerLogout()">🚪 Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edição -->
+    <div id="modalEdicao" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+        <div style="background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto;">
+            <h2>✏️ Editar Perfil</h2>
+
+            <div class="error" id="erroModal"></div>
+
+            <div style="margin-top: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 600;">Email</label>
+                <input type="email" id="editEmail" style="width: 100%; padding: 10px; border: 2px solid #eee; border-radius: 5px; font-size: 14px;">
+
+                <label style="display: block; margin-top: 15px; margin-bottom: 8px; font-weight: 600;">Data de Nascimento</label>
+                <input type="date" id="editData" style="width: 100%; padding: 10px; border: 2px solid #eee; border-radius: 5px; font-size: 14px;">
+
+                <label style="display: block; margin-top: 15px; margin-bottom: 8px; font-weight: 600;">Senha Atual (obrigatória para alterar)</label>
+                <input type="password" id="senhaAtual" style="width: 100%; padding: 10px; border: 2px solid #eee; border-radius: 5px; font-size: 14px;" placeholder="Deixe em branco se não quer alterar">
+
+                <label style="display: block; margin-top: 15px; margin-bottom: 8px; font-weight: 600;">Nova Senha (opcional)</label>
+                <input type="password" id="novaSenha" style="width: 100%; padding: 10px; border: 2px solid #eee; border-radius: 5px; font-size: 14px;" placeholder="Deixe em branco para manter a atual">
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button onclick="salvarEdicao()" style="flex: 1; padding: 10px; background: #667eea; color: white; border: none; border-radius: 5px; font-weight: 600; cursor: pointer;">💾 Salvar</button>
+                    <button onclick="fecharEdicao()" style="flex: 1; padding: 10px; background: #eee; color: #333; border: none; border-radius: 5px; font-weight: 600; cursor: pointer;">❌ Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Carregar dados do perfil
+        async function carregarPerfil() {
+            try {
+                const response = await fetch('/api/auth/perfil')
+                const data = await response.json()
+
+                if (!response.ok) {
+                    window.location.href = '/artista/login'
+                    return
+                }
+
+                const artista = data.artista
+
+                // Preencher dados
+                document.getElementById('nomeArtista').textContent = artista.artista || '-'
+                document.getElementById('emailArtista').textContent = artista.email || '-'
+                document.getElementById('dataNasc').textContent = artista.dataNascimento 
+                    ? new Date(artista.dataNascimento).toLocaleDateString('pt-BR')
+                    : '-'
+
+                // Status
+                if (artista.artes && artista.artes.length === 0) {
+                    document.getElementById('statusBadge').innerHTML = '<span class="explorer-badge">🔍 Apenas Explorando</span>'
+                } else {
+                    document.getElementById('statusBadge').textContent = '✓ Artista Ativo'
+                }
+
+                // Artes
+                if (artista.artes && artista.artes.length > 0) {
+                    document.getElementById('artesTags').innerHTML = artista.artes.map(arte => 
+                        `<span class="arte-tag">${arte}</span>`
+                    ).join('')
+                } else {
+                    document.getElementById('artesTags').innerHTML = '<span style="color: #999;">Nenhuma área de arte selecionada</span>'
+                }
+
+                // Preencher inputs de edição
+                document.getElementById('editEmail').value = artista.email || ''
+                document.getElementById('editData').value = artista.dataNascimento 
+                    ? artista.dataNascimento.split('T')[0]
+                    : ''
+
+            } catch (erro) {
+                console.error('Erro ao carregar perfil:', erro)
+                document.getElementById('erro').textContent = 'Erro ao carregar perfil'
+                document.getElementById('erro').style.display = 'block'
+            }
+        }
+
+        function abrirEdicao() {
+            document.getElementById('modalEdicao').style.display = 'flex'
+        }
+
+        function fecharEdicao() {
+            document.getElementById('modalEdicao').style.display = 'none'
+            document.getElementById('erroModal').style.display = 'none'
+        }
+
+        async function salvarEdicao() {
+            const email = document.getElementById('editEmail').value
+            const dataNascimento = document.getElementById('editData').value
+            const senhaAtual = document.getElementById('senhaAtual').value
+            const novaSenha = document.getElementById('novaSenha').value
+
+            try {
+                const response = await fetch('/api/auth/perfil', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        dataNascimento,
+                        senhaAtual: senhaAtual || undefined,
+                        novaSenha: novaSenha || undefined
+                    })
+                })
+
+                const data = await response.json()
+
+                if (!response.ok) {
+                    document.getElementById('erroModal').textContent = data.erro || 'Erro ao salvar'
+                    document.getElementById('erroModal').style.display = 'block'
+                    return
+                }
+
+                // Atualizar dados na página
+                carregarPerfil()
+                fecharEdicao()
+                alert('Perfil atualizado com sucesso!')
+            } catch (erro) {
+                document.getElementById('erroModal').textContent = 'Erro ao conectar ao servidor'
+                document.getElementById('erroModal').style.display = 'block'
+            }
+        }
+
+        async function fazerLogout() {
+            if (confirm('Tem certeza que quer fazer logout?')) {
+                try {
+                    await fetch('/api/auth/logout', { method: 'POST' })
+                    window.location.href = '/'
+                } catch (erro) {
+                    alert('Erro ao fazer logout')
+                }
+            }
+        }
+
+        // Carregar perfil ao abrir página
+        carregarPerfil()
+    </script>
+</body>
+</html>

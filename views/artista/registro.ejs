@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Registro de Artista - ARTIF</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .artes-group {
+            margin-bottom: 20px;
+        }
+
+        .artes-group label {
+            display: block;
+            margin-bottom: 12px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .artes-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .arte-checkbox {
+            display: flex;
+            align-items: center;
+        }
+
+        .arte-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .arte-checkbox label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 400;
+            color: #666;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .success {
+            background: #efe;
+            color: #3c3;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Voltar</a>
+        
+        <div class="header">
+            <h1>📝 Registre-se</h1>
+            <p>Crie sua conta de artista gratuitamente</p>
+        </div>
+
+        <div class="error" id="erro"></div>
+        <div class="success" id="sucesso"></div>
+
+        <form id="registroForm">
+            <div class="form-group">
+                <label for="artista">Nome de Artista</label>
+                <input type="text" id="artista" name="artista" required placeholder="Seu nome artístico">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="seu@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" required placeholder="Mínimo 6 caracteres">
+            </div>
+
+            <div class="form-group">
+                <label for="dataNascimento">Data de Nascimento</label>
+                <input type="date" id="dataNascimento" name="dataNascimento" required>
+            </div>
+
+            <div class="artes-group">
+                <label>Áreas de Arte (opcional)</label>
+                <p style="font-size: 12px; color: #999; margin-bottom: 10px;">Se não selecionar nenhuma, você ficará como "Apenas Explorando"</p>
+                <div class="artes-options" id="artesOptions">
+                    <!-- Será preenchido via JavaScript -->
+                </div>
+            </div>
+
+            <button type="submit" class="btn">✨ Criar Conta</button>
+        </form>
+
+        <div class="footer">
+            <p>Já tem conta? <a href="/artista/login">Faça login aqui</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Carregar artes disponíveis
+        async function carregarArtes() {
+            try {
+                const response = await fetch('/api/artes/listar')
+                const data = await response.json()
+
+                if (data.sucesso && data.artes) {
+                    const artesOptions = document.getElementById('artesOptions')
+                    artesOptions.innerHTML = ''
+
+                    data.artes.forEach(arte => {
+                        const div = document.createElement('div')
+                        div.className = 'arte-checkbox'
+                        div.innerHTML = `
+                            <input type="checkbox" id="arte_${arte._id}" name="artes" value="${arte._id}">
+                            <label for="arte_${arte._id}">${arte.titulo}</label>
+                        `
+                        artesOptions.appendChild(div)
+                    })
+                }
+            } catch (erro) {
+                console.error('Erro ao carregar artes:', erro)
+            }
+        }
+
+        // Carregar artes ao abrir a página
+        carregarArtes()
+
+        // Submeter formulário
+        document.getElementById('registroForm').addEventListener('submit', async (e) => {
+            e.preventDefault()
+
+            const artista = document.getElementById('artista').value
+            const email = document.getElementById('email').value
+            const senha = document.getElementById('senha').value
+            const dataNascimento = document.getElementById('dataNascimento').value
+
+            // Validar senha
+            if (senha.length < 6) {
+                document.getElementById('erro').textContent = 'Senha deve ter no mínimo 6 caracteres'
+                document.getElementById('erro').style.display = 'block'
+                return
+            }
+
+            // Coletar artes selecionadas
+            const artes = Array.from(document.querySelectorAll('input[name="artes"]:checked')).map(checkbox => checkbox.value)
+
+            try {
+                const response = await fetch('/api/auth/registro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        artista,
+                        email,
+                        senha,
+                        dataNascimento,
+                        artes
+                    })
+                })
+
+                const data = await response.json()
+
+                if (!response.ok) {
+                    document.getElementById('erro').textContent = data.erro || 'Erro ao registrar'
+                    document.getElementById('erro').style.display = 'block'
+                    return
+                }
+
+                document.getElementById('sucesso').textContent = 'Conta criada com sucesso! Redirecionando...'
+                document.getElementById('sucesso').style.display = 'block'
+
+                // Redirecionar para a área do cliente
+                setTimeout(() => {
+                    window.location.href = '/cliente'
+                }, 2000)
+            } catch (erro) {
+                document.getElementById('erro').textContent = 'Erro ao conectar ao servidor'
+                document.getElementById('erro').style.display = 'block'
+            }
+        })
+    </script>
+</body>
+</html>

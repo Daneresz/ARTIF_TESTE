@@ -3,6 +3,8 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import multer from 'multer';
 import fs from 'fs';
+import session from 'express-session';
+import { adicionarDadosArtistaGlobal } from './middlewares/authMiddleware.js';
 import routes from './routes/route.js';
 
 const app = express();
@@ -10,6 +12,18 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('view engine', 'ejs');
+
+// Configurar session
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'sua-chave-secreta-super-segura-123',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { 
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000 // 24 horas
+    }
+}));
 
 // Caminho correto das views e public
 const __filename = fileURLToPath(import.meta.url);
@@ -56,6 +70,9 @@ app.set('views', join(__dirname, '/views'));
 // Middleware de upload em todas as rotas POST
 app.use(upload.any());
 app.use(diskUploadMiddleware);
+
+// Middleware de autenticação global
+app.use(adicionarDadosArtistaGlobal);
 
 // Rotas
 app.use(routes);
