@@ -1,4 +1,89 @@
 <%- include('../cabecalho.ejs') %>
+    <style>
+        .artist-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f9f9f9;
+            transition: box-shadow 0.3s;
+        }
+
+        .artist-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .artist-header {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .artist-photo {
+            flex-shrink: 0;
+        }
+
+        .artist-photo img {
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 3px solid #667eea;
+        }
+
+        .artist-info h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .artist-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .artes-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .arte-tag {
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .explorer-badge {
+            background: #fffbea;
+            color: #ff9800;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .expand-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .expand-btn:hover {
+            background: #764ba2;
+        }
+    </style>
+
     <div style="margin-bottom: 16px;">
         <a href="/artes" style="text-decoration: none; color: #007bff; font-weight: bold;">🎨 Ver Artes</a>
     </div>
@@ -13,44 +98,52 @@
             <p>Nenhuma Artista encontrada.</p>
             <% } else { %>
                 <% for (const m of Musicas) { %>
-                    <div class="music-item">
-                        <div class="music-summary">
-                            <h3>
-                                <%= m.artista %>
-                            </h3>
-                            <button type="button" class="expand-btn">Expanda</button>
-                        </div>
-                        <div class="music-details" style="display:none; margin-top:8px;">
-                            <div style="display:flex; gap:16px; align-items:flex-start;">
-                                <div>
-                                    <% if (m.perfil) { %>
-                                        <img src="<%= m.perfil %>" alt="perfil" style="width:120px;height:auto" onerror="this.src='/img/user-placeholder.svg'">
-                                        <% } %>
-                                </div>
-                                <div>
-                                    <p><strong>Artes:</strong>
-                                        <% if (m.artes && m.artes.length > 0) { %>
-                                            <%= m.artes.join(', ') %>
-                                        <% } else if (m.arte) { %>
-                                            <%= m.arte %>
-                                        <% } %>
-                                    </p>
-                                    <p><strong>Idade:</strong>
-                                        <%= m.idade %>
-                                    </p>
-                                    <% if (m.letra) { %>
-                                        <p><strong>Letra:</strong> <br>
-                                        <pre style="white-space:pre-wrap"><%= m.letra %></pre>
-                                        </p>
-                                        <% } %>
-                                            <% if (m.cifra) { %>
-                                                <details>
-                                                    <summary>Mostrar cifra</summary>
-                                                    <pre style="white-space:pre-wrap"><%= m.cifra %></pre>
-                                                </details>
-                                                <% } %>
-                                </div>
+                    <div class="artist-card">
+                        <div class="artist-header">
+                            <div class="artist-photo">
+                                <% if (m.perfil) { %>
+                                    <img src="<%= m.perfil %>" alt="<%= m.artista %>" onerror="this.src='/img/user-placeholder.svg'">
+                                <% } else { %>
+                                    <img src="/img/user-placeholder.svg" alt="<%= m.artista %>">
+                                <% } %>
                             </div>
+                            <div class="artist-info">
+                                <h3><%= m.artista %></h3>
+                                <p><strong>Artes:</strong></p>
+                                <div class="artes-tags">
+                                    <% if (m.artes && m.artes.length > 0) { %>
+                                        <% m.artes.forEach(arte => { %>
+                                            <span class="arte-tag"><%= arte %></span>
+                                        <% }) %>
+                                    <% } else if (m.arte) { %>
+                                        <span class="arte-tag"><%= m.arte %></span>
+                                    <% } else { %>
+                                        <span class="explorer-badge">🔍 Apenas Explorando</span>
+                                    <% } %>
+                                </div>
+                                <% if (m.dataNascimento) { %>
+                                    <p style="margin-top: 10px;"><strong>Data de Nascimento:</strong> <%= new Date(m.dataNascimento).toLocaleDateString('pt-BR') %></p>
+                                <% } else if (m.idade) { %>
+                                    <p style="margin-top: 10px;"><strong>Idade:</strong> <%= m.idade %> anos</p>
+                                <% } %>
+                                <button type="button" class="expand-btn" style="margin-top: 10px;">Mais Informações</button>
+                            </div>
+                        </div>
+
+                        <div class="music-details" style="display:none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd;">
+                            <% if (m.youtube) { %>
+                                <p><strong>YouTube:</strong> <a href="<%= m.youtube %>" target="_blank"><%= m.youtube %></a></p>
+                            <% } %>
+                            <% if (m.letra) { %>
+                                <p><strong>Letra:</strong></p>
+                                <pre style="white-space:pre-wrap; background: white; padding: 10px; border-radius: 4px;"><%= m.letra %></pre>
+                            <% } %>
+                            <% if (m.cifra) { %>
+                                <details style="margin-top: 10px;">
+                                    <summary style="cursor: pointer; font-weight: 600;">Mostrar Cifra</summary>
+                                    <pre style="white-space:pre-wrap; background: white; padding: 10px; border-radius: 4px; margin-top: 10px;"><%= m.cifra %></pre>
+                                </details>
+                            <% } %>
                         </div>
                     </div>
                     <% } %>
@@ -59,14 +152,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.music-item').forEach(function (item) {
-                var btn = item.querySelector('.expand-btn');
-                var details = item.querySelector('.music-details');
+            document.querySelectorAll('.artist-card').forEach(function (card) {
+                var btn = card.querySelector('.expand-btn');
+                var details = card.querySelector('.music-details');
                 if (!btn || !details) return;
                 btn.addEventListener('click', function () {
                     var isHidden = details.style.display === 'none' || details.style.display === '';
                     details.style.display = isHidden ? 'block' : 'none';
-                    btn.textContent = isHidden ? 'Fechar' : 'Expanda';
+                    btn.textContent = isHidden ? 'Menos Informações' : 'Mais Informações';
                 });
             });
         });
