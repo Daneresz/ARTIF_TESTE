@@ -239,7 +239,7 @@
                 const response = await fetch('/api/artes/listar')
                 const data = await response.json()
 
-                if (data.sucesso && data.artes) {
+                if (data.sucesso && data.artes && data.artes.length > 0) {
                     const artesOptions = document.getElementById('artesOptions')
                     artesOptions.innerHTML = ''
 
@@ -252,9 +252,12 @@
                         `
                         artesOptions.appendChild(div)
                     })
+                } else {
+                    document.getElementById('artesOptions').innerHTML = '<p style="color: #999;">Nenhuma arte cadastrada no sistema</p>'
                 }
             } catch (erro) {
                 console.error('Erro ao carregar artes:', erro)
+                document.getElementById('artesOptions').innerHTML = '<p style="color: #c33;">Erro ao carregar artes</p>'
             }
         }
 

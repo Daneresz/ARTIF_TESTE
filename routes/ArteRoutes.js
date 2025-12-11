@@ -1,6 +1,7 @@
 import express from 'express'
 const router = express.Router()
 import ArteController from '../controllers/ArteController.js'
+import Arte from '../models/arte.js'
 const controle = new ArteController()
 
 import multer from 'multer'
@@ -36,9 +37,10 @@ const caminhobase = 'artes/'
 
 router.get('/api/artes/listar', async (req, res) => {
     try {
-        const artes = await controle.model.find({})
+        const artes = await Arte.find({}).sort({ createdAt: -1 })
         res.json({ sucesso: true, artes })
     } catch (erro) {
+        console.error('Erro ao listar artes:', erro)
         res.status(500).json({ sucesso: false, erro: erro.message })
     }
 })
